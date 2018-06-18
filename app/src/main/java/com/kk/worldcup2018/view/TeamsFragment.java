@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.dagger.WorldCupApplication;
 import com.kk.worldcup2018.data.WorldCupFetcher;
-import com.kk.worldcup2018.data.WorldCupFetcherImpl;
 import com.kk.worldcup2018.model.Team;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+
+import javax.inject.Inject;
 
 /**
  * A fragment representing a list of Items.
@@ -29,7 +31,8 @@ public class TeamsFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
 
-    WorldCupFetcher worldCupFetcher = new WorldCupFetcherImpl();
+    @Inject
+    WorldCupFetcher worldCupFetcher;
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -55,17 +58,22 @@ public class TeamsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        injectDependencies();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+    }
+
+    private void injectDependencies() {
+        ((WorldCupApplication) ((MainActivity) getContext()).getApplication())
+                .getWorldCupComponent()
+                .inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_teams_list, container, false);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
