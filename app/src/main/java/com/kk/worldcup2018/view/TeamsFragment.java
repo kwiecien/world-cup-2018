@@ -11,20 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
-import com.kk.worldcup2018.data.FootballFetcher;
+import com.kk.worldcup2018.data.WorldCupFetcher;
+import com.kk.worldcup2018.data.WorldCupFetcherImpl;
 import com.kk.worldcup2018.model.Team;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-
-import hugo.weaving.DebugLog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import timber.log.Timber;
 
 /**
  * A fragment representing a list of Items.
@@ -36,7 +28,9 @@ public class TeamsFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private final WorldCupFetcher worldCupFetcher = new WorldCupFetcher();
+
+    WorldCupFetcher worldCupFetcher = new WorldCupFetcherImpl();
+
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
@@ -83,12 +77,13 @@ public class TeamsFragment extends Fragment {
             }
             recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>(), mListener));
         }
-
-        worldCupFetcher.getTeams();
-
+        worldCupFetcher.fetchTeams(teams -> {
+            teams.sort(Comparator.comparing(Team::getName));
+            ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
+            recyclerView.getAdapter().notifyDataSetChanged();
+        });
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -120,37 +115,6 @@ public class TeamsFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Team item);
-    }
-
-    public class WorldCupFetcher {
-
-        private static final String WORLD_CUP_API_ENDPOINT = "http://api.football-data.org/v1/competitions/467/";
-        private final FootballFetcher fetcher = new Retrofit.Builder()
-                .baseUrl(WORLD_CUP_API_ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(FootballFetcher.class);
-
-        @DebugLog
-        public List<Team> getTeams() {
-            final List<Team> teams = new ArrayList<>();
-            fetcher.getTeams().enqueue(new Callback<FootballFetcher.TeamsResponse>() {
-                @Override
-                public void onResponse(Call<FootballFetcher.TeamsResponse> call, Response<FootballFetcher.TeamsResponse> response) {
-                    List<Team> teams = response.body().getTeams();
-                    teams.sort(Comparator.comparing(Team::getName));
-                    ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<FootballFetcher.TeamsResponse> call, Throwable t) {
-                    Timber.e(t);
-                }
-            });
-            return teams;
-        }
-
     }
 
 }
