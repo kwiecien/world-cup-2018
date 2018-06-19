@@ -2,7 +2,10 @@ package com.kk.worldcup2018.model;
 
 import java.util.List;
 
-public final class Team {
+import lombok.Data;
+
+@Data
+public class Team {
     private final String name;
     private final String code;
     private final String crestUrl;
@@ -15,20 +18,4 @@ public final class Team {
         this.players = players;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getCrestUrl() {
-        return crestUrl;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-    
 }
