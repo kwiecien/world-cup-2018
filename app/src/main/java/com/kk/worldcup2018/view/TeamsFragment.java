@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
-import com.kk.worldcup2018.dagger.WorldCupApplication;
+import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.data.WorldCupFetcher;
 import com.kk.worldcup2018.model.Team;
 
@@ -65,9 +65,7 @@ public class TeamsFragment extends Fragment {
     }
 
     private void injectDependencies() {
-        ((WorldCupApplication) ((MainActivity) getContext()).getApplication())
-                .getWorldCupComponent()
-                .inject(this);
+        DaggerWorldCupComponent.builder().build().inject(this);
     }
 
     @Override
