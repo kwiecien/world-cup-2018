@@ -83,12 +83,16 @@ public class TeamsFragment extends Fragment {
             }
             recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>(), mListener));
         }
+        fetchTeams();
+        return view;
+    }
+
+    private void fetchTeams() {
         worldCupFetcher.fetchTeams(teams -> {
             teams.sort(Comparator.comparing(Team::getName));
             ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
             recyclerView.getAdapter().notifyDataSetChanged();
         });
-        return view;
     }
 
     @Override
