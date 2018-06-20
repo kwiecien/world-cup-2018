@@ -25,14 +25,16 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
     public void fetchTeams(UpdateCallback callback) {
         fetcher.getTeams().enqueue(new Callback<FootballFetcher.TeamsResponse>() {
             @Override
-            public void onResponse(@NonNull Call<FootballFetcher.TeamsResponse> call, @NonNull Response<FootballFetcher.TeamsResponse> response) {
+            public void onResponse(@NonNull Call<FootballFetcher.TeamsResponse> call,
+                                   @NonNull Response<FootballFetcher.TeamsResponse> response) {
                 callback.update(Optional.ofNullable(response.body())
-                        .map(FootballFetcher.TeamsResponse::getTeams)
+                        .map(FootballFetcher.TeamsResponse::getObjects)
                         .orElseGet(ArrayList::new));
             }
 
             @Override
-            public void onFailure(Call<FootballFetcher.TeamsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<FootballFetcher.TeamsResponse> call,
+                                  @NonNull Throwable t) {
                 Timber.e(t);
             }
         });

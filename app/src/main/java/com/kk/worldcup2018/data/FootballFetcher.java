@@ -19,20 +19,26 @@ public interface FootballFetcher {
     @GET("fixtures")
     Call<FixturesResponse> getFixtures();
 
-    class TeamsResponse {
-        private List<Team> teams = new ArrayList<>();
+    abstract class Response<T> {
+        List<Team> teams = new ArrayList<>();
+        List<Fixture> fixtures = new ArrayList<>();
 
         @NonNull
-        public List<Team> getTeams() {
+        public abstract List<T> getObjects();
+    }
+
+    class TeamsResponse extends Response<Team> {
+        @Override
+        @NonNull
+        public List<Team> getObjects() {
             return teams;
         }
     }
 
-    class FixturesResponse {
-        private List<Fixture> fixtures = new ArrayList<>();
-
+    class FixturesResponse extends Response<Fixture> {
+        @Override
         @NonNull
-        public List<Fixture> getFixtures() {
+        public List<Fixture> getObjects() {
             return fixtures;
         }
     }
