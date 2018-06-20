@@ -20,6 +20,8 @@ import java.util.Comparator;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -83,7 +85,9 @@ public class TeamsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
             }
-            recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>()));
+            if (recyclerView.getAdapter() == null) {
+                recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>()));
+            }
         }
     }
 
@@ -92,6 +96,9 @@ public class TeamsFragment extends Fragment {
             teams.sort(Comparator.comparing(Team::getName));
             ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
             recyclerView.getAdapter().notifyDataSetChanged();
+        });
+        worldCupFetcher.fetchFixtures(fixtures -> {
+            Timber.d(fixtures.toString());
         });
     }
 

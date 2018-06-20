@@ -2,6 +2,9 @@ package com.kk.worldcup2018.data;
 
 import android.support.annotation.NonNull;
 
+import com.kk.worldcup2018.model.Fixture;
+import com.kk.worldcup2018.model.Team;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -22,7 +25,7 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
             .create(FootballFetcher.class);
 
     @Override
-    public void fetchTeams(UpdateCallback callback) {
+    public void fetchTeams(UpdateCallback<Team> callback) {
         fetcher.getTeams().enqueue(new Callback<FootballFetcher.TeamsResponse>() {
             @Override
             public void onResponse(@NonNull Call<FootballFetcher.TeamsResponse> call,
@@ -34,6 +37,25 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
 
             @Override
             public void onFailure(@NonNull Call<FootballFetcher.TeamsResponse> call,
+                                  @NonNull Throwable t) {
+                Timber.e(t);
+            }
+        });
+    }
+
+    @Override
+    public void fetchFixtures(UpdateCallback<Fixture> callback) {
+        fetcher.getFixtures().enqueue(new Callback<FootballFetcher.FixturesResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FootballFetcher.FixturesResponse> call,
+                                   @NonNull Response<FootballFetcher.FixturesResponse> response) {
+                callback.update(Optional.ofNullable(response.body())
+                        .map(FootballFetcher.FixturesResponse::getObjects)
+                        .orElseGet(ArrayList::new));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<FootballFetcher.FixturesResponse> call,
                                   @NonNull Throwable t) {
                 Timber.e(t);
             }
