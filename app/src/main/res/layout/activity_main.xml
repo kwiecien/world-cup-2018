@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/main_fragment"
         android:name="com.kk.worldcup2018.view.TeamsFragment"
         android:layout_width="match_parent"
