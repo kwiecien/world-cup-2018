@@ -101,6 +101,9 @@ public class TeamsFragment extends Fragment {
         worldCupFetcher.fetchFixtures(fixtures -> {
             Timber.d(fixtures.toString());
         });
+        worldCupFetcher.fetchGroups(groups -> {
+            Timber.d(groups.toString());
+        });
     }
 
 }
