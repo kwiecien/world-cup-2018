@@ -30,11 +30,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timber.plant(new Timber.DebugTree());
+        setUpTimber();
         setContentView(R.layout.activity_main);
+        setUpBottomNavigation();
+        setWelcomeScreen();
+    }
 
+    private void setUpTimber() {
+        Timber.plant(new Timber.DebugTree());
+    }
+
+    private void setUpBottomNavigation() {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    private void setWelcomeScreen() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, WelcomeFragment.newInstance())
+                .commit();
     }
 
 }
