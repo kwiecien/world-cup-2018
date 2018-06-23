@@ -11,5 +11,5 @@ public class Standings {
     private final int points;
     private final int goals;
     private final int goalsAgainst;
-    private final int goalsDifference;
+    private final int goalDifference;
 }
