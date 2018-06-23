@@ -41,7 +41,7 @@ public class TeamsFragment extends Fragment {
 
 
     public TeamsFragment() {
-        /**
+        /*
          * Mandatory empty constructor for the fragment manager to instantiate the
          * fragment (e.g. upon screen orientation changes).
          */
@@ -86,9 +86,7 @@ public class TeamsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
             }
-            if (recyclerView.getAdapter() == null) {
-                recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>()));
-            }
+            recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>()));
         }
     }
 
@@ -97,9 +95,6 @@ public class TeamsFragment extends Fragment {
             teams.sort(Comparator.comparing(Team::getName));
             ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
             recyclerView.getAdapter().notifyDataSetChanged();
-        });
-        worldCupFetcher.fetchFixtures(fixtures -> {
-            Timber.d(fixtures.toString());
         });
         worldCupFetcher.fetchGroups(groups -> {
             Timber.d(groups.toString());
