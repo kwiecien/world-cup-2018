@@ -8,14 +8,13 @@ import android.widget.TextView;
 
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.model.Fixture;
-import com.kk.worldcup2018.model.Team;
 
 import java.util.List;
 
 import timber.log.Timber;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Team}
+ * {@link RecyclerView.Adapter} that can display a {@link Fixture}
  */
 public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRecyclerViewAdapter.FixturesViewHolder> {
 

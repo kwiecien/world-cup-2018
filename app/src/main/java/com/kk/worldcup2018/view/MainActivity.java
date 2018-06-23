@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragmentWith(FixturesFragment.newInstance());
                 return true;
             case R.id.navigation_groups:
+                replaceFragmentWith(GroupsFragment.newInstance());
                 return true;
             default:
         }
