@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
+    android:id="@+id/teams_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     tools:context=".view.TeamsFragment"
     tools:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/fragment_teams"
+    tools:listitem="@layout/list_item_team"
     tools:name="com.kk.worldcup2018.view.TeamsFragment" />

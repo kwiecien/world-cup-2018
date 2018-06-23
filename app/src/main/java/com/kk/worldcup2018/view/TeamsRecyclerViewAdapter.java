@@ -27,7 +27,7 @@ public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecycler
     @Override
     public TeamsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_teams, parent, false);
+                .inflate(R.layout.list_item_team, parent, false);
         return new TeamsViewHolder(view);
     }
 
