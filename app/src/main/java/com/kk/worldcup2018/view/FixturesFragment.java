@@ -1,9 +1,11 @@
 package com.kk.worldcup2018.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -67,8 +69,14 @@ public class FixturesFragment extends Fragment {
     private void fetchFixtures() {
         worldCupFetcher.fetchFixtures(fixtures -> {
             ((FixturesRecyclerViewAdapter) recyclerView.getAdapter()).setFixtures(fixtures);
+            addDecorationsToRecyclerView();
             recyclerView.getAdapter().notifyDataSetChanged();
         });
+    }
+
+    private void addDecorationsToRecyclerView() {
+        Drawable divider = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+        recyclerView.addItemDecoration(new DividerItemDecoration(divider));
     }
 
 }
