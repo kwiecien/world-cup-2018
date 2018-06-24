@@ -4,4 +4,6 @@
     <string name="title_fixtures">Fixtures</string>
     <string name="title_groups">Groups</string>
     <string name="world_cup_2018_logo">World Cup 2018 logo</string>
+    <string name="dash">—</string>
+    <string name="colon">:</string>
 </resources>
