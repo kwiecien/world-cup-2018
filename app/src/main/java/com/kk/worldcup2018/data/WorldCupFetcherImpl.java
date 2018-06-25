@@ -12,21 +12,21 @@ import com.kk.worldcup2018.model.Team;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 public class WorldCupFetcherImpl implements WorldCupFetcher {
 
-    private static final String WORLD_CUP_API_ENDPOINT = "http://api.football-data.org/v1/competitions/467/";
-    private final FootballFetcher fetcher = new Retrofit.Builder()
-            .baseUrl(WORLD_CUP_API_ENDPOINT)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(FootballFetcher.class);
+    private final FootballFetcher fetcher;
+
+    @Inject
+    public WorldCupFetcherImpl(FootballFetcher fetcher) {
+        this.fetcher = fetcher;
+    }
 
     @Override
     public void fetchTeams(UpdateCallback<Team> callback) {
