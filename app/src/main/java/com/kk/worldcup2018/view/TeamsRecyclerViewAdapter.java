@@ -1,6 +1,7 @@
 package com.kk.worldcup2018.view;
 
 import android.content.Context;
+import android.graphics.drawable.PictureDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,13 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.model.Team;
+import com.kk.worldcup2018.svg.GlideApp;
+import com.kk.worldcup2018.svg.SvgSoftwareLayerSetter;
 
 import java.util.List;
 
 import timber.log.Timber;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Team}
@@ -42,7 +46,12 @@ public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecycler
     public void onBindViewHolder(@NonNull final TeamsViewHolder holder, int position) {
         holder.team = teams.get(position);
         holder.countryView.setText(teams.get(position).getName());
-        Glide.with(context)
+        GlideApp.with(context)
+                .as(PictureDrawable.class)
+                //.placeholder(R.drawable.image_loading) // TODO
+                //.error(R.drawable.image_error) // TODO
+                .transition(withCrossFade())
+                .listener(new SvgSoftwareLayerSetter())
                 .load(teams.get(position).getCrestUrl())
                 .into(holder.flagImageView);
 
