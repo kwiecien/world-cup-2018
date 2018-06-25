@@ -1,11 +1,9 @@
 package com.kk.worldcup2018.view;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +13,7 @@ import android.view.ViewGroup;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.data.WorldCupFetcher;
+import com.kk.worldcup2018.view.support.RecyclerViewUtils;
 
 import java.util.ArrayList;
 
@@ -75,8 +74,7 @@ public class FixturesFragment extends Fragment {
     }
 
     private void addDecorationsToRecyclerView() {
-        Drawable divider = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        recyclerView.addItemDecoration(new DividerItemDecoration(divider));
+        RecyclerViewUtils.addDividerToRecyclerView(getContext(), recyclerView);
     }
 
 }

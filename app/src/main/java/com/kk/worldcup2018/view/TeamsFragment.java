@@ -15,6 +15,7 @@ import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.data.WorldCupFetcher;
 import com.kk.worldcup2018.model.Team;
+import com.kk.worldcup2018.view.support.RecyclerViewUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -84,7 +85,7 @@ public class TeamsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
             }
-            recyclerView.setAdapter(new TeamsRecyclerViewAdapter(new ArrayList<>()));
+            recyclerView.setAdapter(new TeamsRecyclerViewAdapter(getContext(), new ArrayList<>()));
         }
     }
 
@@ -92,8 +93,13 @@ public class TeamsFragment extends Fragment {
         worldCupFetcher.fetchTeams(teams -> {
             teams.sort(Comparator.comparing(Team::getName));
             ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
+            addDecorationsToRecyclerView();
             recyclerView.getAdapter().notifyDataSetChanged();
         });
+    }
+
+    private void addDecorationsToRecyclerView() {
+        RecyclerViewUtils.addDividerToRecyclerView(getContext(), recyclerView);
     }
 
 }

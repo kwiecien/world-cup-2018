@@ -65,7 +65,7 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
         public GroupsViewHolder(View view) {
             super(view);
             mView = view;
-            idView = view.findViewById(R.id.item_number);
+            idView = view.findViewById(R.id.country);
             contentView = view.findViewById(R.id.content);
         }
 

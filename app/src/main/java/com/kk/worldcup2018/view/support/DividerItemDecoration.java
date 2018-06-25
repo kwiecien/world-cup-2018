@@ -1,4 +1,4 @@
-package com.kk.worldcup2018.view;
+package com.kk.worldcup2018.view.support;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
