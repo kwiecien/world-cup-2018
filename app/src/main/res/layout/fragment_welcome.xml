@@ -6,6 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:adjustViewBounds="true"
         android:contentDescription="@string/world_cup_2018_logo"
         android:scaleType="fitCenter"
