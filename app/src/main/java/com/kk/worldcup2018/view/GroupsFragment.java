@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.data.WorldCupFetcher;
+import com.kk.worldcup2018.view.support.RecyclerViewUtils;
 
 import java.util.ArrayList;
 
@@ -67,8 +68,12 @@ public class GroupsFragment extends Fragment {
     private void fetchGroups() {
         worldCupFetcher.fetchGroups(groups -> {
             ((GroupsRecyclerViewAdapter) recyclerView.getAdapter()).setGroups(groups);
+            addDecorationsToRecyclerView();
             recyclerView.getAdapter().notifyDataSetChanged();
         });
     }
 
+    private void addDecorationsToRecyclerView() {
+        RecyclerViewUtils.addDividerToRecyclerView(getContext(), recyclerView);
+    }
 }

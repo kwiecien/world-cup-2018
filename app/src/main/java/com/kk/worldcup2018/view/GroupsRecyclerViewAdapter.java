@@ -21,10 +21,11 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
 
     private List<Group> groups;
 
-    public GroupsRecyclerViewAdapter(List<Group> groups) {
+    GroupsRecyclerViewAdapter(List<Group> groups) {
         this.groups = groups;
     }
 
+    @NonNull
     @Override
     public GroupsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -33,18 +34,13 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
     }
 
     @Override
-    public void onBindViewHolder(final GroupsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final GroupsViewHolder holder, int position) {
         holder.group = groups.get(position);
-        holder.idView.setText(groups.get(position).getLetter());
-        holder.contentView.setText(groups.get(position).getStandingsList().toString());
+        holder.groupView.setText(String.format("Group %s", groups.get(position).getLetter()));
 
-        holder.mView.setOnClickListener(v ->
+        holder.view.setOnClickListener(v ->
                 Timber.d("Fixture %s clicked", holder.group.getLetter())
         );
-    }
-
-    public List<Group> getGroups() {
-        return groups;
     }
 
     public void setGroups(List<Group> groups) {
@@ -56,22 +52,15 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
         return groups.size();
     }
 
-    public class GroupsViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView idView;
-        public final TextView contentView;
-        public Group group;
+    class GroupsViewHolder extends RecyclerView.ViewHolder {
+        final View view;
+        final TextView groupView;
+        Group group;
 
-        public GroupsViewHolder(View view) {
+        GroupsViewHolder(View view) {
             super(view);
-            mView = view;
-            idView = view.findViewById(R.id.country);
-            contentView = view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + contentView.getText() + "'";
+            this.view = view;
+            groupView = view.findViewById(R.id.group);
         }
     }
 }
