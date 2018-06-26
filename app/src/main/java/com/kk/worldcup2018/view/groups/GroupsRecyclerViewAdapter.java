@@ -1,5 +1,6 @@
 package com.kk.worldcup2018.view.groups;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +20,11 @@ import timber.log.Timber;
  */
 public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecyclerViewAdapter.GroupsViewHolder> {
 
+    private final Context context;
     private List<Group> groups;
 
-    GroupsRecyclerViewAdapter(List<Group> groups) {
+    GroupsRecyclerViewAdapter(Context context, List<Group> groups) {
+        this.context = context;
         this.groups = groups;
     }
 
@@ -38,9 +41,10 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
         holder.group = groups.get(position);
         holder.groupView.setText(String.format("Group %s", groups.get(position).getLetter()));
 
-        holder.view.setOnClickListener(v ->
-                Timber.d("Fixture %s clicked", holder.group.getLetter())
-        );
+        holder.view.setOnClickListener(v -> {
+            Timber.d("Fixture %s clicked", holder.group.getLetter());
+            context.startActivity(GroupActivity.newIntent(context, holder.group));
+        });
     }
 
     public void setGroups(List<Group> groups) {

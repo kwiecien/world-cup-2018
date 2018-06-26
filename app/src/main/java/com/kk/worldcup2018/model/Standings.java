@@ -1,15 +1,62 @@
 package com.kk.worldcup2018.model;
 
-import lombok.Data;
+import org.parceler.Parcel;
 
-@Data
+@Parcel
 public class Standings {
-    private final int rank;
-    private final String team;
-    private final int teamId;
-    private final int playedGames;
-    private final int points;
-    private final int goals;
-    private final int goalsAgainst;
-    private final int goalDifference;
+    int rank;
+    String team;
+    int teamId;
+    int playedGames;
+    int points;
+    int goals;
+    int goalsAgainst;
+    int goalDifference;
+
+    public Standings() {
+
+    }
+
+    public Standings(int rank, String team, int teamId, int playedGames, int points, int goals, int goalsAgainst, int goalDifference) {
+        this.rank = rank;
+        this.team = team;
+        this.teamId = teamId;
+        this.playedGames = playedGames;
+        this.points = points;
+        this.goals = goals;
+        this.goalsAgainst = goalsAgainst;
+        this.goalDifference = goalDifference;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public int getPlayedGames() {
+        return playedGames;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getGoals() {
+        return goals;
+    }
+
+    public int getGoalsAgainst() {
+        return goalsAgainst;
+    }
+
+    public int getGoalDifference() {
+        return goalDifference;
+    }
 }

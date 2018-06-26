@@ -53,7 +53,7 @@ public class GroupsFragment extends RecyclerViewFragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new GroupsRecyclerViewAdapter(new ArrayList<>()));
+            recyclerView.setAdapter(new GroupsRecyclerViewAdapter(context, new ArrayList<>()));
         }
     }
 
