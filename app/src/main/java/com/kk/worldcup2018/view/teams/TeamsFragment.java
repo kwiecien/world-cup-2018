@@ -1,9 +1,8 @@
-package com.kk.worldcup2018.view;
+package com.kk.worldcup2018.view.teams;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,14 +12,11 @@ import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
-import com.kk.worldcup2018.data.WorldCupFetcher;
 import com.kk.worldcup2018.model.Team;
-import com.kk.worldcup2018.view.support.RecyclerViewUtils;
+import com.kk.worldcup2018.view.RecyclerViewFragment;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
-import javax.inject.Inject;
 
 /**
  * A fragment representing a list of Items.
@@ -28,16 +24,11 @@ import javax.inject.Inject;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class TeamsFragment extends Fragment {
+public class TeamsFragment extends RecyclerViewFragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
-    @Inject
-    WorldCupFetcher worldCupFetcher;
-
     private int columnCount = 1;
-    private RecyclerView recyclerView;
-
 
     public TeamsFragment() {
         /*
@@ -63,7 +54,8 @@ public class TeamsFragment extends Fragment {
         }
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         DaggerWorldCupComponent.builder().build().inject(this);
     }
 
@@ -96,10 +88,6 @@ public class TeamsFragment extends Fragment {
             addDecorationsToRecyclerView();
             recyclerView.getAdapter().notifyDataSetChanged();
         });
-    }
-
-    private void addDecorationsToRecyclerView() {
-        RecyclerViewUtils.addDividerToRecyclerView(getContext(), recyclerView);
     }
 
 }

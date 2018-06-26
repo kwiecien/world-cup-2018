@@ -1,4 +1,4 @@
-package com.kk.worldcup2018.view;
+package com.kk.worldcup2018.view.teams;
 
 import android.content.Context;
 import android.graphics.drawable.PictureDrawable;

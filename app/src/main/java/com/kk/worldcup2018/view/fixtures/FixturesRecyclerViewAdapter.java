@@ -1,4 +1,4 @@
-package com.kk.worldcup2018.view;
+package com.kk.worldcup2018.view.fixtures;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

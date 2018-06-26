@@ -1,9 +1,8 @@
-package com.kk.worldcup2018.view;
+package com.kk.worldcup2018.view.fixtures;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,19 +11,11 @@ import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
-import com.kk.worldcup2018.data.WorldCupFetcher;
-import com.kk.worldcup2018.view.support.RecyclerViewUtils;
+import com.kk.worldcup2018.view.RecyclerViewFragment;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-public class FixturesFragment extends Fragment {
-
-    @Inject
-    WorldCupFetcher worldCupFetcher;
-
-    private RecyclerView recyclerView;
+public class FixturesFragment extends RecyclerViewFragment {
 
     public FixturesFragment() {
         /*
@@ -43,7 +34,8 @@ public class FixturesFragment extends Fragment {
         injectDependencies();
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         DaggerWorldCupComponent.builder().build().inject(this);
     }
 
@@ -71,10 +63,6 @@ public class FixturesFragment extends Fragment {
             addDecorationsToRecyclerView();
             recyclerView.getAdapter().notifyDataSetChanged();
         });
-    }
-
-    private void addDecorationsToRecyclerView() {
-        RecyclerViewUtils.addDividerToRecyclerView(getContext(), recyclerView);
     }
 
 }

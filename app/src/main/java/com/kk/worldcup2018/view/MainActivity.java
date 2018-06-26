@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.view.fixtures.FixturesFragment;
+import com.kk.worldcup2018.view.groups.GroupsFragment;
+import com.kk.worldcup2018.view.teams.TeamsFragment;
 
 import timber.log.Timber;
 

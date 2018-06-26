@@ -1,8 +1,8 @@
 package com.kk.worldcup2018.dagger;
 
-import com.kk.worldcup2018.view.FixturesFragment;
-import com.kk.worldcup2018.view.GroupsFragment;
-import com.kk.worldcup2018.view.TeamsFragment;
+import com.kk.worldcup2018.view.fixtures.FixturesFragment;
+import com.kk.worldcup2018.view.groups.GroupsFragment;
+import com.kk.worldcup2018.view.teams.TeamsFragment;
 
 import javax.inject.Singleton;
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    tools:context=".view.FixturesFragment"
+    tools:context=".view.fixtures.FixturesFragment"
     tools:layoutManager="LinearLayoutManager"
     tools:listitem="@layout/list_item_fixture"
     tools:name="com.kk.worldcup2018.view.FixturesFragment" />
