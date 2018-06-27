@@ -1,10 +1,32 @@
 package com.kk.worldcup2018.model;
 
-import lombok.Data;
+import org.parceler.Parcel;
 
-@Data
+@Parcel
 public class Result {
-    private final int goalsHomeTeam;
-    private final int goalsAwayTeam;
-    private final Result halfTime;
+    int goalsHomeTeam;
+    int goalsAwayTeam;
+    Result halfTime;
+
+    public Result() {
+
+    }
+
+    public Result(int goalsHomeTeam, int goalsAwayTeam, Result halfTime) {
+        this.goalsHomeTeam = goalsHomeTeam;
+        this.goalsAwayTeam = goalsAwayTeam;
+        this.halfTime = halfTime;
+    }
+
+    public int getGoalsHomeTeam() {
+        return goalsHomeTeam;
+    }
+
+    public int getGoalsAwayTeam() {
+        return goalsAwayTeam;
+    }
+
+    public Result getHalfTime() {
+        return halfTime;
+    }
 }

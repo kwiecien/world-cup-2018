@@ -1,17 +1,54 @@
 package com.kk.worldcup2018.model;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
-import lombok.Data;
-
-@Data
+@Parcel
 public class Fixture {
-    private final Date date;
-    private final Status status;
-    private final int matchday;
-    private final String homeTeamName;
-    private final String awayTeamName;
-    private final Result result;
+    Date date;
+    Status status;
+    int matchday;
+    String homeTeamName;
+    String awayTeamName;
+    Result result;
+
+    public Fixture() {
+
+    }
+
+    public Fixture(Date date, Status status, int matchday, String homeTeamName, String awayTeamName, Result result) {
+        this.date = date;
+        this.status = status;
+        this.matchday = matchday;
+        this.homeTeamName = homeTeamName;
+        this.awayTeamName = awayTeamName;
+        this.result = result;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public int getMatchday() {
+        return matchday;
+    }
+
+    public String getHomeTeamName() {
+        return homeTeamName;
+    }
+
+    public String getAwayTeamName() {
+        return awayTeamName;
+    }
+
+    public Result getResult() {
+        return result;
+    }
 
     enum Status {
         TIMED, IN_PLAY, FINISHED
