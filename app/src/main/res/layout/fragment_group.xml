@@ -1,44 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_group_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="1">
-
-    <TableRow>
-        <TextView
-            android:gravity="center"
-            android:text="Rank" />
-        <TextView
-            android:gravity="center"
-            android:text="Team" />
-        <TextView
-            android:gravity="center"
-            android:text="G+" />
-        <TextView
-            android:gravity="center"
-            android:text="G-" />
-        <TextView
-            android:gravity="center"
-            android:text="+-" />
-        <TextView
-            android:gravity="center"
-            android:text="Points" />
-    </TableRow>
-
-    <include
-        android:id="@+id/first"
-        layout="@layout/group_table_row" />
-
-    <include
-        android:id="@+id/second"
-        layout="@layout/group_table_row" />
-
-    <include
-        android:id="@+id/third"
-        layout="@layout/group_table_row" />
-
-    <include
-        android:id="@+id/fourth"
-        layout="@layout/group_table_row" />
-
-</TableLayout>
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:layout="@layout/group_table" />

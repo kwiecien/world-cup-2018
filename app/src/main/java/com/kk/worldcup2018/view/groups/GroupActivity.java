@@ -35,7 +35,7 @@ public class GroupActivity extends AppCompatActivity {
         Group group = Parcels.unwrap(getIntent().getParcelableExtra(ARG_GROUP));
         GroupFragment groupFragment = GroupFragment.newInstance(group);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.table_group, groupFragment)
+                .replace(R.id.fragment_group_container, groupFragment)
                 .commit();
 
         FloatingActionButton fab = findViewById(R.id.fab);
