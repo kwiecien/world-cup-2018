@@ -1,5 +1,6 @@
 package com.kk.worldcup2018.view.fixtures;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +20,11 @@ import timber.log.Timber;
  */
 public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRecyclerViewAdapter.FixturesViewHolder> {
 
+    private final Context context;
     private List<Fixture> fixtures;
 
-    FixturesRecyclerViewAdapter(List<Fixture> fixtures) {
+    FixturesRecyclerViewAdapter(Context context, List<Fixture> fixtures) {
+        this.context = context;
         this.fixtures = fixtures;
     }
 
@@ -41,9 +44,10 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         holder.goalsHome.setText(String.valueOf(fixtures.get(position).getResult().getGoalsHomeTeam()));
         holder.goalsAway.setText(String.valueOf(fixtures.get(position).getResult().getGoalsAwayTeam()));
 
-        holder.mView.setOnClickListener(v ->
-                Timber.d("Fixture %s clicked", holder.fixture)
-        );
+        holder.mView.setOnClickListener(v -> {
+            Timber.d("Fixture %s clicked", holder.fixture);
+            context.startActivity(FixtureActivity.newIntent(context, holder.fixture));
+        });
     }
 
     public void setFixtures(List<Fixture> fixtures) {

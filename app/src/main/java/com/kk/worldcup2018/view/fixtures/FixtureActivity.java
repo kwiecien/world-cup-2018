@@ -34,7 +34,7 @@ public class FixtureActivity extends AppCompatActivity {
         Fixture fixture = Parcels.unwrap(getIntent().getParcelableExtra(ARG_FIXTURE));
         FixtureFragment fixtureFragment = FixtureFragment.newInstance(fixture);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.table_group, fixtureFragment)
+                .replace(R.id.fragment_fixture_container, fixtureFragment)
                 .commit();
 
         FloatingActionButton fab = findViewById(R.id.fab);

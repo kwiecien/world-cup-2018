@@ -53,7 +53,7 @@ public class FixturesFragment extends RecyclerViewFragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new FixturesRecyclerViewAdapter(new ArrayList<>()));
+            recyclerView.setAdapter(new FixturesRecyclerViewAdapter(getContext(), new ArrayList<>()));
         }
     }
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1">
+
+    <TableRow>
+        <TextView
+            android:gravity="center"
+            android:text="Rank" />
+        <TextView
+            android:gravity="center"
+            android:text="Team" />
+        <TextView
+            android:gravity="center"
+            android:text="G+" />
+        <TextView
+            android:gravity="center"
+            android:text="G-" />
+        <TextView
+            android:gravity="center"
+            android:text="+-" />
+        <TextView
+            android:gravity="center"
+            android:text="Points" />
+    </TableRow>
+
+
+</TableLayout>
