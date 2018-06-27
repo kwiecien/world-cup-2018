@@ -1,33 +1,28 @@
-<layout>
-    <data>
-        <variable
-            name="rank"
-            type="java.lang.String" />
-    </data>
-
-    <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
-        <TextView
-            android:gravity="center"
-            android:text="@{rank}" />
-        <TextView
-            android:id="@+id/team"
-            tools:text="Russia" />
-        <TextView
-            android:id="@+id/goals_plus"
-            android:gravity="center"
-            tools:text="6" />
-        <TextView
-            android:id="@+id/goals_minus"
-            android:gravity="center"
-            tools:text="3" />
-        <TextView
-            android:id="@+id/goal_difference"
-            android:gravity="center"
-            tools:text="3" />
-        <TextView
-            android:id="@+id/points"
-            android:gravity="center"
-            tools:text="9" />
-    </TableRow>
-</layout>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/rank"
+        android:gravity="center"
+        android:text="1" />
+    <TextView
+        android:id="@+id/team"
+        tools:text="Russia" />
+    <TextView
+        android:id="@+id/goals_plus"
+        android:gravity="center"
+        tools:text="6" />
+    <TextView
+        android:id="@+id/goals_minus"
+        android:gravity="center"
+        tools:text="3" />
+    <TextView
+        android:id="@+id/goal_difference"
+        android:gravity="center"
+        tools:text="3" />
+    <TextView
+        android:id="@+id/points"
+        android:gravity="center"
+        tools:text="9" />
+</TableRow>

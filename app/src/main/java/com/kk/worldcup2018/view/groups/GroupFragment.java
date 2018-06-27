@@ -62,11 +62,13 @@ public class GroupFragment extends Fragment {
     }
 
     private void fillRow(TableRow tableRow, Standings standings) {
+        TextView rankTextView = tableRow.findViewById(R.id.rank);
         TextView teamTextView = tableRow.findViewById(R.id.team);
         TextView goalsPlusTextView = tableRow.findViewById(R.id.goals_plus);
         TextView goalsMinusTextView = tableRow.findViewById(R.id.goals_minus);
         TextView goalDifferenceTextView = tableRow.findViewById(R.id.goal_difference);
         TextView pointsTextView = tableRow.findViewById(R.id.points);
+        rankTextView.setText(String.valueOf(standings.getRank()));
         teamTextView.setText(standings.getTeam());
         goalsPlusTextView.setText(String.valueOf(standings.getGoals()));
         goalsMinusTextView.setText(String.valueOf(standings.getGoalsAgainst()));
