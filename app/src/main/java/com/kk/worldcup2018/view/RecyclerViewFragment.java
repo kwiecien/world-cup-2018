@@ -19,7 +19,8 @@ public abstract class RecyclerViewFragment extends Fragment {
     protected abstract void injectDependencies();
 
     protected void addDecorationsToRecyclerView() {
-        RecyclerViewUtils.addDividerToRecyclerView(getContext(), recyclerView);
+        RecyclerViewUtils.addDivider(getContext(), recyclerView);
+        RecyclerViewUtils.addLeftVerticalDrawable(getContext(), recyclerView);
     }
 
 }

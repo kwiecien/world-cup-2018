@@ -15,12 +15,20 @@ public class RecyclerViewUtils {
         throw new UnsupportedOperationException("Suppress default constructor for noninstantiability");
     }
 
-    public static void addDividerToRecyclerView(@Nullable Context context, @NonNull RecyclerView recyclerView) {
+    public static void addDivider(@Nullable Context context, @NonNull RecyclerView recyclerView) {
         if (context == null) {
             return;
         }
         Drawable divider = ContextCompat.getDrawable(context, R.drawable.divider);
         recyclerView.addItemDecoration(new DividerItemDecoration(divider));
+    }
+
+    public static void addLeftVerticalDrawable(@Nullable Context context, @NonNull RecyclerView recyclerView) {
+        if (context == null) {
+            return;
+        }
+        Drawable leftVerticalDrawable = ContextCompat.getDrawable(context, R.drawable.vertical_line);
+        recyclerView.addItemDecoration(new LeftVerticalItemDecoration(leftVerticalDrawable));
     }
 
 }
