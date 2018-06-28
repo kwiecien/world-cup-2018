@@ -21,25 +21,32 @@ public class FixtureStatusItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
         int drawableLeft = 0;
-        int drawableRight = timedDrawable.getIntrinsicWidth();
+        int drawableRight = parent.getPaddingLeft();
         int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount - 1; i++) {
+        for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             int drawableTop = child.getTop() + params.topMargin;
             int drawableBottom = child.getBottom() - params.bottomMargin;
-            int position = parent.getChildAdapterPosition(child);
-            int viewType = parent.getAdapter().getItemViewType(position);
-            timedDrawable.setBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
-            inPlayDrawable.setBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
-            finishedDrawable.setBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
-            if (viewType == FixturesRecyclerViewAdapter.TIMED_VIEW_TYPE) {
-                timedDrawable.draw(canvas);
-            } else if (viewType == FixturesRecyclerViewAdapter.IN_PLAY_VIEW_TYPE) {
-                inPlayDrawable.draw(canvas);
-            } else if (viewType == FixturesRecyclerViewAdapter.FINISHED_VIEW_TYPE) {
-                finishedDrawable.draw(canvas);
-            }
+            int viewType = determineViewType(parent, child);
+            Drawable drawable = selectDrawable(viewType);
+            drawable.setBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
+            drawable.draw(canvas);
+        }
+    }
+
+    private int determineViewType(RecyclerView parent, View child) {
+        int position = parent.getChildAdapterPosition(child);
+        return parent.getAdapter().getItemViewType(position);
+    }
+
+    private Drawable selectDrawable(int viewType) {
+        if (viewType == FixturesRecyclerViewAdapter.TIMED_VIEW_TYPE) {
+            return timedDrawable;
+        } else if (viewType == FixturesRecyclerViewAdapter.IN_PLAY_VIEW_TYPE) {
+            return inPlayDrawable;
+        } else {
+            return finishedDrawable;
         }
     }
 
