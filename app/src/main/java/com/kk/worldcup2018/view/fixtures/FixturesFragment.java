@@ -1,8 +1,11 @@
 package com.kk.worldcup2018.view.fixtures;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +15,17 @@ import android.view.ViewGroup;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
+import com.kk.worldcup2018.view.support.LeftVerticalItemDecoration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FixturesFragment extends RecyclerViewFragment {
+
+    private final List<Integer> colors = new ArrayList<>(Arrays.asList(
+            android.R.color.holo_red_dark,
+            android.R.color.holo_blue_dark));
 
     public FixturesFragment() {
         /*
@@ -61,8 +71,18 @@ public class FixturesFragment extends RecyclerViewFragment {
         worldCupFetcher.fetchFixtures(fixtures -> {
             ((FixturesRecyclerViewAdapter) recyclerView.getAdapter()).setFixtures(fixtures);
             addDecorationsToRecyclerView();
+            addLeftVerticalDrawable(getContext(), colors);
             recyclerView.getAdapter().notifyDataSetChanged();
         });
+    }
+
+    public void addLeftVerticalDrawable(@Nullable Context context, @NonNull List<Integer> colors) {
+        if (context == null) {
+            return;
+        }
+        Drawable verticalLine1 = ContextCompat.getDrawable(context, R.drawable.vertical_line1);
+        Drawable verticalLine2 = ContextCompat.getDrawable(context, R.drawable.vertical_line2);
+        recyclerView.addItemDecoration(new LeftVerticalItemDecoration(verticalLine1, verticalLine2, colors));
     }
 
 }

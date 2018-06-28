@@ -23,12 +23,4 @@ public class RecyclerViewUtils {
         recyclerView.addItemDecoration(new DividerItemDecoration(divider));
     }
 
-    public static void addLeftVerticalDrawable(@Nullable Context context, @NonNull RecyclerView recyclerView) {
-        if (context == null) {
-            return;
-        }
-        Drawable leftVerticalDrawable = ContextCompat.getDrawable(context, R.drawable.vertical_line);
-        recyclerView.addItemDecoration(new LeftVerticalItemDecoration(leftVerticalDrawable));
-    }
-
 }

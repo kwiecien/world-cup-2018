@@ -20,7 +20,6 @@ public abstract class RecyclerViewFragment extends Fragment {
 
     protected void addDecorationsToRecyclerView() {
         RecyclerViewUtils.addDivider(getContext(), recyclerView);
-        RecyclerViewUtils.addLeftVerticalDrawable(getContext(), recyclerView);
     }
 
 }

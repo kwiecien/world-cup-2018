@@ -31,8 +31,14 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
     @NonNull
     @Override
     public FixturesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_fixture, parent, false);
+        View view;
+        if (viewType == 0) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item_fixture, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item_fixture_timed, parent, false);
+        }
         return new FixturesViewHolder(view);
     }
 
@@ -41,13 +47,20 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         holder.fixture = fixtures.get(position);
         holder.homeTeam.setText(fixtures.get(position).getHomeTeamName());
         holder.awayTeam.setText(fixtures.get(position).getAwayTeamName());
-        holder.goalsHome.setText(String.valueOf(fixtures.get(position).getResult().getGoalsHomeTeam()));
-        holder.goalsAway.setText(String.valueOf(fixtures.get(position).getResult().getGoalsAwayTeam()));
+        if (holder.getItemViewType() == 0) {
+            holder.goalsHome.setText(String.valueOf(fixtures.get(position).getResult().getGoalsHomeTeam()));
+            holder.goalsAway.setText(String.valueOf(fixtures.get(position).getResult().getGoalsAwayTeam()));
+        }
 
         holder.mView.setOnClickListener(v -> {
             Timber.d("Fixture %s clicked", holder.fixture);
             context.startActivity(FixtureActivity.newIntent(context, holder.fixture));
         });
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2;
     }
 
     public void setFixtures(List<Fixture> fixtures) {
