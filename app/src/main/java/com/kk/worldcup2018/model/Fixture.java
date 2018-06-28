@@ -50,7 +50,7 @@ public class Fixture {
         return result;
     }
 
-    enum Status {
+    public enum Status {
         TIMED, IN_PLAY, FINISHED
     }
 

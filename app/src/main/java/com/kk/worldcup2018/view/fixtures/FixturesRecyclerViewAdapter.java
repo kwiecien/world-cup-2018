@@ -15,31 +15,42 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.kk.worldcup2018.model.Fixture.Status.FINISHED;
+import static com.kk.worldcup2018.model.Fixture.Status.IN_PLAY;
+
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Fixture}
  */
 public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRecyclerViewAdapter.FixturesViewHolder> {
 
+    public static final int TIMED_VIEW_TYPE = 0;
+    public static final int IN_PLAY_VIEW_TYPE = 1;
+    public static final int FINISHED_VIEW_TYPE = 3;
     private final Context context;
+    private final RecyclerView recyclerView;
     private List<Fixture> fixtures;
 
-    FixturesRecyclerViewAdapter(Context context, List<Fixture> fixtures) {
+    FixturesRecyclerViewAdapter(Context context, RecyclerView recyclerView, List<Fixture> fixtures) {
         this.context = context;
+        this.recyclerView = recyclerView;
         this.fixtures = fixtures;
     }
 
     @NonNull
     @Override
     public FixturesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == 0) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_fixture, parent, false);
-        } else {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_fixture_timed, parent, false);
-        }
+        View view = selectViewType(parent, viewType);
         return new FixturesViewHolder(view);
+    }
+
+    private View selectViewType(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == TIMED_VIEW_TYPE) {
+            return inflater.inflate(R.layout.list_item_fixture_timed, parent, false);
+        } else if (viewType == IN_PLAY_VIEW_TYPE) {
+            return inflater.inflate(R.layout.list_item_fixture_in_play, parent, false);
+        }
+        return inflater.inflate(R.layout.list_item_fixture_finished, parent, false);
     }
 
     @Override
@@ -47,7 +58,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         holder.fixture = fixtures.get(position);
         holder.homeTeam.setText(fixtures.get(position).getHomeTeamName());
         holder.awayTeam.setText(fixtures.get(position).getAwayTeamName());
-        if (holder.getItemViewType() == 0) {
+        if (holder.getItemViewType() != TIMED_VIEW_TYPE) {
             holder.goalsHome.setText(String.valueOf(fixtures.get(position).getResult().getGoalsHomeTeam()));
             holder.goalsAway.setText(String.valueOf(fixtures.get(position).getResult().getGoalsAwayTeam()));
         }
@@ -60,7 +71,13 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
     @Override
     public int getItemViewType(int position) {
-        return position % 2;
+        if (fixtures.get(position).getStatus() == FINISHED) {
+            return FINISHED_VIEW_TYPE;
+        } else if (fixtures.get(position).getStatus() == IN_PLAY) {
+            return IN_PLAY_VIEW_TYPE;
+        } else {
+            return TIMED_VIEW_TYPE;
+        }
     }
 
     public void setFixtures(List<Fixture> fixtures) {

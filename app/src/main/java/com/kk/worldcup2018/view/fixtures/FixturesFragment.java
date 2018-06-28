@@ -15,17 +15,11 @@ import android.view.ViewGroup;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
-import com.kk.worldcup2018.view.support.LeftVerticalItemDecoration;
+import com.kk.worldcup2018.view.support.FixtureStatusItemDecoration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FixturesFragment extends RecyclerViewFragment {
-
-    private final List<Integer> colors = new ArrayList<>(Arrays.asList(
-            android.R.color.holo_red_dark,
-            android.R.color.holo_blue_dark));
 
     public FixturesFragment() {
         /*
@@ -63,26 +57,28 @@ public class FixturesFragment extends RecyclerViewFragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new FixturesRecyclerViewAdapter(getContext(), new ArrayList<>()));
+            recyclerView.setAdapter(new FixturesRecyclerViewAdapter(getContext(), recyclerView, new ArrayList<>()));
         }
     }
 
     private void fetchFixtures() {
         worldCupFetcher.fetchFixtures(fixtures -> {
-            ((FixturesRecyclerViewAdapter) recyclerView.getAdapter()).setFixtures(fixtures);
+            FixturesRecyclerViewAdapter fixturesAdapter = (FixturesRecyclerViewAdapter) recyclerView.getAdapter();
+            fixturesAdapter.setFixtures(fixtures);
             addDecorationsToRecyclerView();
-            addLeftVerticalDrawable(getContext(), colors);
+            addLeftVerticalDrawable(getContext());
             recyclerView.getAdapter().notifyDataSetChanged();
         });
     }
 
-    public void addLeftVerticalDrawable(@Nullable Context context, @NonNull List<Integer> colors) {
+    public void addLeftVerticalDrawable(@Nullable Context context) {
         if (context == null) {
             return;
         }
-        Drawable verticalLine1 = ContextCompat.getDrawable(context, R.drawable.vertical_line1);
-        Drawable verticalLine2 = ContextCompat.getDrawable(context, R.drawable.vertical_line2);
-        recyclerView.addItemDecoration(new LeftVerticalItemDecoration(verticalLine1, verticalLine2, colors));
+        Drawable timed = ContextCompat.getDrawable(context, R.drawable.vertical_line_timed);
+        Drawable inPlay = ContextCompat.getDrawable(context, R.drawable.vertical_line_in_play);
+        Drawable finished = ContextCompat.getDrawable(context, R.drawable.vertical_line_finished);
+        recyclerView.addItemDecoration(new FixtureStatusItemDecoration(timed, inPlay, finished));
     }
 
 }
