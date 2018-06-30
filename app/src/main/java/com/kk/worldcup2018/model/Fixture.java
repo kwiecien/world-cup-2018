@@ -51,7 +51,17 @@ public class Fixture {
     }
 
     public enum Status {
-        TIMED, IN_PLAY, FINISHED
+        TIMED("TIMED"), IN_PLAY("IN PLAY"), FINISHED("FINISHED");
+        private final String fixtureStatus;
+
+        Status(String fixtureStatus) {
+            this.fixtureStatus = fixtureStatus;
+        }
+
+        @Override
+        public String toString() {
+            return fixtureStatus;
+        }
     }
 
 }
