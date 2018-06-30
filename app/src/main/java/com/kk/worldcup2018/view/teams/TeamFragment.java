@@ -1,14 +1,18 @@
 package com.kk.worldcup2018.view.teams;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.databinding.FragmentTeamBinding;
 import com.kk.worldcup2018.model.Team;
 
@@ -18,6 +22,7 @@ public class TeamFragment extends Fragment {
 
     private static final String ARG_TEAM = "arg-team";
     private Team team;
+    private AppDatabase db;
 
     public TeamFragment() {
         /*
@@ -51,4 +56,22 @@ public class TeamFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        TeamViewModelFactory modelFactory = new TeamViewModelFactory(db, team.getTeamId());
+        final TeamViewModel viewModel = ViewModelProviders.of(getActivity(), modelFactory)
+                .get(TeamViewModel.class);
+        viewModel.getTeam().observe(this, new Observer<Team>() {
+            @Override
+            public void onChanged(@Nullable Team team) {
+                viewModel.getTeam().removeObserver(this);
+                populateUi(team);
+            }
+        });
+    }
+
+    private void populateUi(Team team) {
+        // TODO
+    }
 }
