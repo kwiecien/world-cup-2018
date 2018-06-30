@@ -1,5 +1,6 @@
 package com.kk.worldcup2018.view.fixtures;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.databinding.FragmentFixtureBinding;
 import com.kk.worldcup2018.model.Fixture;
 
 import org.parceler.Parcels;
@@ -43,7 +45,9 @@ public class FixtureFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fixture, container, false);
+        FragmentFixtureBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fixture, container, false);
+        View view = binding.getRoot();
+        binding.setFixture(fixture);
         return view;
     }
 

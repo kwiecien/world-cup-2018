@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -31,11 +33,16 @@ public class FixtureActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Fixture fixture = Parcels.unwrap(getIntent().getParcelableExtra(ARG_FIXTURE));
-        FixtureFragment fixtureFragment = FixtureFragment.newInstance(fixture);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_fixture_container, fixtureFragment)
-                .commit();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        if (fragment == null) {
+            Fixture fixture = Parcels.unwrap(getIntent().getParcelableExtra(ARG_FIXTURE));
+            fragment = FixtureFragment.newInstance(fixture);
+            fm.beginTransaction()
+                    .add(R.id.fragment_container, fragment)
+                    .commit();
+        }
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

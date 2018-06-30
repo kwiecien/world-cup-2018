@@ -27,12 +27,10 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
     public static final int IN_PLAY_VIEW_TYPE = 1;
     public static final int FINISHED_VIEW_TYPE = 3;
     private final Context context;
-    private final RecyclerView recyclerView;
     private List<Fixture> fixtures;
 
-    FixturesRecyclerViewAdapter(Context context, RecyclerView recyclerView, List<Fixture> fixtures) {
+    FixturesRecyclerViewAdapter(Context context, List<Fixture> fixtures) {
         this.context = context;
-        this.recyclerView = recyclerView;
         this.fixtures = fixtures;
     }
 
