@@ -15,16 +15,16 @@
 
         <TextView
             android:id="@+id/goals_home"
-            style="@style/fixture_text_view"
+            style="@style/fixtures_list_item_text_view"
             tools:text="5" />
 
         <TextView
-            style="@style/fixture_text_view"
+            style="@style/fixtures_list_item_text_view"
             android:text="@string/colon" />
 
         <TextView
             android:id="@+id/goals_away"
-            style="@style/fixture_text_view"
+            style="@style/fixtures_list_item_text_view"
             tools:text="0" />
 
     </LinearLayout>
