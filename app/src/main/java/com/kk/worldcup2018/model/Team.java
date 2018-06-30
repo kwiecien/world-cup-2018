@@ -1,14 +1,51 @@
 package com.kk.worldcup2018.model;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
-import lombok.Data;
-
-@Data
+@Parcel
 public class Team {
-    private final int teamId;
-    private final String name;
-    private final String code;
-    private final String crestUrl;
-    private final List<Player> players;
+    int teamId;
+    String name;
+    String code;
+    String crestUrl;
+    List<Player> players;
+
+    public Team() {
+        // Necessary for Parcels
+    }
+
+    public Team(int teamId, String name, String code, String crestUrl, List<Player> players) {
+        this.teamId = teamId;
+        this.name = name;
+        this.code = code;
+        this.crestUrl = crestUrl;
+        this.players = players;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getCrestUrl() {
+        return crestUrl;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
 }

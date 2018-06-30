@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="java.text.DateFormat" />
+        <variable
+            name="team"
+            type="com.kk.worldcup2018.model.Team" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fixture_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TODO" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

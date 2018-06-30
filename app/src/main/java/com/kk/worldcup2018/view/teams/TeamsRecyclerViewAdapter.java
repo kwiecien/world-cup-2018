@@ -55,9 +55,10 @@ public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecycler
                 .load(teams.get(position).getCrestUrl())
                 .into(holder.flagImageView);
 
-        holder.view.setOnClickListener(v ->
-                Timber.d("Team %s clicked", holder.team)
-        );
+        holder.view.setOnClickListener(v -> {
+            Timber.d("Team %s clicked", holder.team);
+            context.startActivity(TeamActivity.newIntent(context, holder.team));
+        });
     }
 
     public void setTeams(List<Team> teams) {

@@ -30,6 +30,10 @@
             android:name=".view.fixtures.FixtureActivity"
             android:label="@string/title_activity_fixture"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.teams.TeamActivity"
+            android:label="TeamActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
