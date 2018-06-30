@@ -40,7 +40,7 @@ class WorldCupModule {
     @Provides
     @Singleton
     String provideWorldCupApiEndpoint() {
-        return "http://api.football-data.org/v1/competitions/467/";
+        return "http://api.football-data.org/v1/";
     }
 
     @Provides

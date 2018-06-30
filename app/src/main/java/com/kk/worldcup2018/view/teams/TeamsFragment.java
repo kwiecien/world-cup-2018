@@ -18,6 +18,8 @@ import com.kk.worldcup2018.view.RecyclerViewFragment;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import timber.log.Timber;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -87,6 +89,9 @@ public class TeamsFragment extends RecyclerViewFragment {
             ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
             addDecorationsToRecyclerView();
             recyclerView.getAdapter().notifyDataSetChanged();
+        });
+        worldCupFetcher.fetchPlayers(808, players -> {
+            Timber.d(players.toString());
         });
     }
 

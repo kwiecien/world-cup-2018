@@ -3,10 +3,12 @@ package com.kk.worldcup2018.data;
 import android.support.annotation.NonNull;
 
 import com.kk.worldcup2018.data.response.FixturesResponse;
+import com.kk.worldcup2018.data.response.PlayersResponse;
 import com.kk.worldcup2018.data.response.StandingsResponse;
 import com.kk.worldcup2018.data.response.TeamsResponse;
 import com.kk.worldcup2018.model.Fixture;
 import com.kk.worldcup2018.model.Group;
+import com.kk.worldcup2018.model.Player;
 import com.kk.worldcup2018.model.Team;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
     }
 
     @Override
-    public void fetchTeams(UpdateCallback<Team> callback) {
+    public void fetchTeams(ListUpdateCallback<Team> callback) {
         fetcher.getTeams().enqueue(new Callback<TeamsResponse>() {
             @Override
             public void onResponse(@NonNull Call<TeamsResponse> call,
@@ -48,7 +50,26 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
     }
 
     @Override
-    public void fetchFixtures(UpdateCallback<Fixture> callback) {
+    public void fetchPlayers(int teamId, ListUpdateCallback<Player> callback) {
+        fetcher.getPlayers(teamId).enqueue(new Callback<PlayersResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<PlayersResponse> call,
+                                   @NonNull Response<PlayersResponse> response) {
+                callback.update(Optional.ofNullable(response.body())
+                        .map(PlayersResponse::getObjects)
+                        .orElseGet(ArrayList::new));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PlayersResponse> call,
+                                  @NonNull Throwable t) {
+                Timber.e(t);
+            }
+        });
+    }
+
+    @Override
+    public void fetchFixtures(ListUpdateCallback<Fixture> callback) {
         fetcher.getFixtures().enqueue(new Callback<FixturesResponse>() {
             @Override
             public void onResponse(@NonNull Call<FixturesResponse> call,
@@ -67,7 +88,7 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
     }
 
     @Override
-    public void fetchGroups(UpdateCallback<Group> callback) {
+    public void fetchGroups(ListUpdateCallback<Group> callback) {
         fetcher.getGroups().enqueue(new Callback<StandingsResponse>() {
             @Override
             public void onResponse(@NonNull Call<StandingsResponse> call,
