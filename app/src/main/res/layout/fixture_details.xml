@@ -1,29 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="1">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="fixture"
+            type="com.kk.worldcup2018.model.Fixture" />
+    </data>
 
-    <TableRow>
-        <TextView
-            android:gravity="center"
-            android:text="Rank" />
-        <TextView
-            android:gravity="center"
-            android:text="Team" />
-        <TextView
-            android:gravity="center"
-            android:text="G+" />
-        <TextView
-            android:gravity="center"
-            android:text="G-" />
-        <TextView
-            android:gravity="center"
-            android:text="+-" />
-        <TextView
-            android:gravity="center"
-            android:text="Points" />
-    </TableRow>
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="32dp">
 
+        <android.support.constraint.Guideline
+            android:id="@+id/vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-</TableLayout>
+        <TextView
+            android:id="@+id/home_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@{fixture.homeTeamName}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Russia" />
+
+        <TextView
+            android:id="@+id/goals_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/goals_background"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@{fixture.result.goalsHomeTeam}"
+            android:textSize="64sp"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_team"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/halftime_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/goals_background"
+            android:elevation="8dp"
+            android:padding="16dp"
+            android:text="@{fixture.result.halftime.goalsHomeTeam}"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@+id/goals_home"
+            app:layout_constraintStart_toStartOf="@+id/goals_home"
+            app:layout_constraintTop_toBottomOf="@+id/goals_home"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/away_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@{fixture.awayTeamName}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Saudi Arabia" />
+
+        <TextView
+            android:id="@+id/goals_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/goals_background"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@{fixture.result.goalsAwayTeam}"
+            android:textSize="64sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/home_team"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/halftime_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/goals_background"
+            android:elevation="8dp"
+            android:padding="16dp"
+            android:text="@{fixture.result.halftime.goalsAwayTeam}"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@id/goals_away"
+            app:layout_constraintStart_toStartOf="@+id/goals_away"
+            app:layout_constraintTop_toBottomOf="@+id/goals_away"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="2018-06-14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/halftime_home"
+            tools:text="2018-06-14" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="15:00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            tools:text="15:00" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="FINISHED"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            tools:text="FINISHED" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
