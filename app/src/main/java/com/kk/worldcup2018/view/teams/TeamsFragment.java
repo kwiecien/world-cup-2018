@@ -95,7 +95,7 @@ public class TeamsFragment extends RecyclerViewFragment {
                 .subscribeOn(Schedulers.io())
                 .subscribe(appDatabase -> {
                     List<Team> dbTeams = fetchDbTeams();
-                    if (dbTeams != null && !dbTeams.isEmpty()) {
+                    if (isNotEmpty(dbTeams)) {
                         displayOnUiThread(dbTeams);
                     } else {
                         fetchApiTeams();
@@ -103,18 +103,26 @@ public class TeamsFragment extends RecyclerViewFragment {
                 });
     }
 
+    private boolean isNotEmpty(List<Team> teams) {
+        return teams != null && !teams.isEmpty();
+    }
+
     private List<Team> fetchDbTeams() {
         return db.teamDao().findTeams();
     }
 
+    @SuppressLint("CheckResult")
     private void fetchApiTeams() {
-        worldCupFetcher.fetchTeams(fetchedTeams ->
+        worldCupFetcher.fetchTeams(fetchedTeams -> {
+            if (isNotEmpty(fetchedTeams)) {
                 Observable.just(db)
                         .subscribeOn(Schedulers.io())
                         .subscribe(appDatabase -> {
                             persistTeams(fetchedTeams);
                             displayOnUiThread(fetchedTeams);
-                        }));
+                        });
+            }
+        });
     }
 
     private void displayOnUiThread(List<Team> fetchedTeams) {
