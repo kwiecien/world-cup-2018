@@ -29,4 +29,13 @@ public class Player {
     public int getJerseyNumber() {
         return jerseyNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", position='" + position + '\'' +
+                ", jerseyNumber=" + jerseyNumber +
+                '}';
+    }
 }

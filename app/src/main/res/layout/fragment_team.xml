@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="java.text.DateFormat" />
@@ -8,17 +9,15 @@
             type="com.kk.worldcup2018.model.Team" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/fixture_details_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/players_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="16dp">
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        tools:context=".view.teams.TeamFragment"
+        tools:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/list_item_player"
+        tools:name="com.kk.worldcup2018.view.TeamFragment" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TODO" />
-
-    </android.support.constraint.ConstraintLayout>
 </layout>

@@ -23,9 +23,8 @@ import com.kk.worldcup2018.view.RecyclerViewFragment;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 public class TeamFragment extends RecyclerViewFragment {
 
@@ -79,7 +78,7 @@ public class TeamFragment extends RecyclerViewFragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            //recyclerView.setAdapter(new FixtureRecyclerViewAdapter(getContext(), new ArrayList<>())); // TODO
+            recyclerView.setAdapter(new PlayersRecyclerViewAdapter(new ArrayList<>()));
         }
     }
 
@@ -88,12 +87,11 @@ public class TeamFragment extends RecyclerViewFragment {
     }
 
     private void update(List<Player> players) {
-        // TODO
-        //PlayersRecyclerViewAdapter playersAdapter = (PlayersRecyclerViewAdapter) recyclerView.getAdapter();
-        //playersAdapter.setFixtures(players);
-        //addDecorationsToRecyclerView();
-        //recyclerView.getAdapter().notifyDataSetChanged();
-        Timber.d(players.toString());
+        team.setPlayers(players);
+        PlayersRecyclerViewAdapter playersAdapter = (PlayersRecyclerViewAdapter) recyclerView.getAdapter();
+        playersAdapter.setPlayers(players);
+        addDecorationsToRecyclerView();
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
