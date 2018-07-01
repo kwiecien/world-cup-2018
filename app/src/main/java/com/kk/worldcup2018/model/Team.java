@@ -51,6 +51,10 @@ public class Team {
         this.crestUrl = crestUrl;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getTeamId() {
         return teamId;
     }

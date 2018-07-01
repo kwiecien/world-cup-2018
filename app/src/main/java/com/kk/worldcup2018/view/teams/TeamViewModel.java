@@ -11,7 +11,7 @@ public class TeamViewModel extends ViewModel {
     private final LiveData<Team> team;
 
     public TeamViewModel(int teamId, AppDatabase appDatabase) {
-        team = appDatabase.teamDao().loadTeamById(teamId);
+        team = appDatabase.teamDao().findTeamById(teamId);
     }
 
     public LiveData<Team> getTeam() {
