@@ -1,7 +1,7 @@
 package com.kk.worldcup2018.view.teams;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
-import com.kk.worldcup2018.data.WorldCupFetcher;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
@@ -21,6 +20,9 @@ import com.kk.worldcup2018.view.RecyclerViewFragment;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A fragment representing a list of Items.
@@ -87,8 +89,40 @@ public class TeamsFragment extends RecyclerViewFragment {
         }
     }
 
+    @SuppressLint("CheckResult")
     private void fetchTeams() {
-        new FetchTeamsAsyncTask(db, worldCupFetcher, this).execute();
+        Observable.just(db)
+                .subscribeOn(Schedulers.io())
+                .subscribe(appDatabase -> {
+                    List<Team> dbTeams = fetchDbTeams();
+                    if (dbTeams != null && !dbTeams.isEmpty()) {
+                        displayOnUiThread(dbTeams);
+                    } else {
+                        fetchApiTeams();
+                    }
+                });
+    }
+
+    private List<Team> fetchDbTeams() {
+        return db.teamDao().findTeams();
+    }
+
+    private void fetchApiTeams() {
+        worldCupFetcher.fetchTeams(fetchedTeams ->
+                Observable.just(db)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(appDatabase -> {
+                            persistTeams(fetchedTeams);
+                            displayOnUiThread(fetchedTeams);
+                        }));
+    }
+
+    private void displayOnUiThread(List<Team> fetchedTeams) {
+        getActivity().runOnUiThread(() -> updateUi(fetchedTeams));
+    }
+
+    private void persistTeams(List<Team> fetchedTeams) {
+        db.teamDao().insertTeams(fetchedTeams);
     }
 
     private void updateUi(List<Team> teams) {
@@ -96,50 +130,6 @@ public class TeamsFragment extends RecyclerViewFragment {
         ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
         addDecorationsToRecyclerView();
         recyclerView.getAdapter().notifyDataSetChanged();
-    }
-
-    private static class FetchTeamsAsyncTask extends AsyncTask<Void, Void, List<Team>> {
-        private final AppDatabase db;
-        private final WorldCupFetcher worldCupFetcher;
-        private final TeamsFragment teamsFragment;
-
-        FetchTeamsAsyncTask(AppDatabase db, WorldCupFetcher worldCupFetcher, TeamsFragment teamsFragment) {
-            this.db = db;
-            this.worldCupFetcher = worldCupFetcher;
-            this.teamsFragment = teamsFragment;
-        }
-
-        @Override
-        protected List<Team> doInBackground(Void... params) {
-            return db.teamDao().findTeams();
-        }
-
-        @Override
-        protected void onPostExecute(List<Team> teams) {
-            if (teams != null && !teams.isEmpty()) {
-                teamsFragment.updateUi(teams);
-            } else {
-                worldCupFetcher.fetchTeams(fetchedTeams -> {
-                    new InsertTeamsAsyncTask(db).execute(fetchedTeams);
-                    teamsFragment.updateUi(fetchedTeams);
-                });
-            }
-        }
-    }
-
-    private static class InsertTeamsAsyncTask extends AsyncTask<List<Team>, Void, Void> {
-        private final AppDatabase db;
-
-        InsertTeamsAsyncTask(AppDatabase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Void doInBackground(List<Team>... teams) {
-            db.teamDao().insertTeams(teams[0]);
-            return null;
-        }
-
     }
 
 }
