@@ -3,8 +3,10 @@ package com.kk.worldcup2018.dagger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kk.worldcup2018.data.FootballFetcher;
+import com.kk.worldcup2018.data.TeamLinksDeserializer;
 import com.kk.worldcup2018.data.WorldCupFetcher;
 import com.kk.worldcup2018.data.WorldCupFetcherImpl;
+import com.kk.worldcup2018.data.response.TeamsResponse;
 
 import javax.inject.Singleton;
 
@@ -46,7 +48,9 @@ class WorldCupModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        return new GsonBuilder().create();
+        return new GsonBuilder()
+                .registerTypeAdapter(TeamsResponse.TeamId.class, new TeamLinksDeserializer())
+                .create();
     }
 
     @Provides

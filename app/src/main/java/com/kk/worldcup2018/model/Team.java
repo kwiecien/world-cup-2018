@@ -5,6 +5,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+import com.kk.worldcup2018.data.response.TeamsResponse;
+
 import org.parceler.Parcel;
 
 import java.util.List;
@@ -21,6 +24,9 @@ public class Team {
     String crestUrl;
     @Ignore
     List<Player> players;
+    @Ignore
+    @SerializedName("_links")
+    TeamsResponse.TeamId responseTeamId;
 
     @Ignore
     public Team() {
@@ -49,6 +55,10 @@ public class Team {
         return teamId;
     }
 
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
     public String getName() {
         return name;
     }
@@ -69,4 +79,7 @@ public class Team {
         this.players = players;
     }
 
+    public int getResponseTeamId() {
+        return responseTeamId.getId();
+    }
 }

@@ -2,23 +2,32 @@ package com.kk.worldcup2018.view.teams;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.databinding.FragmentTeamBinding;
+import com.kk.worldcup2018.model.Player;
 import com.kk.worldcup2018.model.Team;
+import com.kk.worldcup2018.view.RecyclerViewFragment;
 
 import org.parceler.Parcels;
 
-public class TeamFragment extends Fragment {
+import java.util.List;
+
+import timber.log.Timber;
+
+public class TeamFragment extends RecyclerViewFragment {
 
     private static final String ARG_TEAM = "arg-team";
     private Team team;
@@ -42,9 +51,16 @@ public class TeamFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectDependencies();
+        db = AppDatabase.getInstance(getContext().getApplicationContext());
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
         }
+    }
+
+    @Override
+    protected void injectDependencies() {
+        DaggerWorldCupComponent.builder().build().inject(this);
     }
 
     @Override
@@ -53,7 +69,31 @@ public class TeamFragment extends Fragment {
         FragmentTeamBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_team, container, false);
         View view = binding.getRoot();
         binding.setTeam(team);
+        setupRecyclerView(view);
+        fetchPlayers();
         return view;
+    }
+
+    private void setupRecyclerView(View view) {
+        if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            recyclerView = (RecyclerView) view;
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            //recyclerView.setAdapter(new FixtureRecyclerViewAdapter(getContext(), new ArrayList<>())); // TODO
+        }
+    }
+
+    private void fetchPlayers() {
+        worldCupFetcher.fetchPlayers(team.getTeamId(), this::update);
+    }
+
+    private void update(List<Player> players) {
+        // TODO
+        //PlayersRecyclerViewAdapter playersAdapter = (PlayersRecyclerViewAdapter) recyclerView.getAdapter();
+        //playersAdapter.setFixtures(players);
+        //addDecorationsToRecyclerView();
+        //recyclerView.getAdapter().notifyDataSetChanged();
+        Timber.d(players.toString());
     }
 
     @Override

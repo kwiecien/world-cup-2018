@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
+import com.kk.worldcup2018.model.Fixture;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 import com.kk.worldcup2018.view.support.FixtureStatusItemDecoration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FixturesFragment extends RecyclerViewFragment {
 
@@ -62,13 +64,15 @@ public class FixturesFragment extends RecyclerViewFragment {
     }
 
     private void fetchFixtures() {
-        worldCupFetcher.fetchFixtures(fixtures -> {
-            FixturesRecyclerViewAdapter fixturesAdapter = (FixturesRecyclerViewAdapter) recyclerView.getAdapter();
-            fixturesAdapter.setFixtures(fixtures);
-            addDecorationsToRecyclerView();
-            addLeftVerticalDrawable(getContext());
-            recyclerView.getAdapter().notifyDataSetChanged();
-        });
+        worldCupFetcher.fetchFixtures(this::update);
+    }
+
+    private void update(List<Fixture> fixtures) {
+        FixturesRecyclerViewAdapter fixturesAdapter = (FixturesRecyclerViewAdapter) recyclerView.getAdapter();
+        fixturesAdapter.setFixtures(fixtures);
+        addDecorationsToRecyclerView();
+        addLeftVerticalDrawable(getContext());
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     public void addLeftVerticalDrawable(@Nullable Context context) {

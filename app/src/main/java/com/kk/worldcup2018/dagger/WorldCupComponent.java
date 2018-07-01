@@ -2,6 +2,7 @@ package com.kk.worldcup2018.dagger;
 
 import com.kk.worldcup2018.view.fixtures.FixturesFragment;
 import com.kk.worldcup2018.view.groups.GroupsFragment;
+import com.kk.worldcup2018.view.teams.TeamFragment;
 import com.kk.worldcup2018.view.teams.TeamsFragment;
 
 import javax.inject.Singleton;
@@ -13,6 +14,8 @@ import dagger.Component;
 public interface WorldCupComponent {
 
     void inject(TeamsFragment teamsFragment);
+
+    void inject(TeamFragment teamFragment);
 
     void inject(FixturesFragment fixturesFragment);
 

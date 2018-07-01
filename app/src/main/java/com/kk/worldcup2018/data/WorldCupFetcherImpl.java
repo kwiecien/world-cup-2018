@@ -36,9 +36,10 @@ public class WorldCupFetcherImpl implements WorldCupFetcher {
             @Override
             public void onResponse(@NonNull Call<TeamsResponse> call,
                                    @NonNull Response<TeamsResponse> response) {
-                callback.update(Optional.ofNullable(response.body())
-                        .map(TeamsResponse::getObjects)
-                        .orElseGet(ArrayList::new));
+                callback.update(
+                        Optional.ofNullable(response.body())
+                                .map(TeamsResponse::getObjects)
+                                .orElseGet(ArrayList::new));
             }
 
             @Override
