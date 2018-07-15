@@ -1,28 +1,37 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/cell_border">
+
     <TextView
         android:id="@+id/rank"
-        android:gravity="center"
+        style="@style/group_cell"
         android:text="1" />
+
     <TextView
         android:id="@+id/team"
+        style="@style/group_cell"
+        android:gravity="start"
         tools:text="Russia" />
+
     <TextView
         android:id="@+id/goals_plus"
-        android:gravity="center"
+        style="@style/group_cell"
         tools:text="6" />
+
     <TextView
         android:id="@+id/goals_minus"
-        android:gravity="center"
+        style="@style/group_cell"
         tools:text="3" />
+
     <TextView
         android:id="@+id/goal_difference"
-        android:gravity="center"
+        style="@style/group_cell"
         tools:text="3" />
+
     <TextView
         android:id="@+id/points"
-        android:gravity="center"
+        style="@style/group_cell"
         tools:text="9" />
 </TableRow>

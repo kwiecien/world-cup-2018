@@ -4,24 +4,30 @@
     android:layout_height="wrap_content"
     android:stretchColumns="1">
 
-    <TableRow>
+    <TableRow android:background="@color/gray">
+
         <TextView
-            android:gravity="center"
+            style="@style/group_cell_header"
             android:text="Rank" />
+
         <TextView
-            android:gravity="center"
+            style="@style/group_cell_header"
             android:text="Team" />
+
         <TextView
-            android:gravity="center"
+            style="@style/group_cell_header"
             android:text="G+" />
+
         <TextView
-            android:gravity="center"
+            style="@style/group_cell_header"
             android:text="G-" />
+
         <TextView
-            android:gravity="center"
+            style="@style/group_cell_header"
             android:text="+-" />
+
         <TextView
-            android:gravity="center"
+            style="@style/group_cell_header"
             android:text="Points" />
     </TableRow>
 

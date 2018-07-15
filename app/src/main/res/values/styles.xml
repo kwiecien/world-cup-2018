@@ -47,4 +47,14 @@
         <item name="android:padding">16dp</item>
     </style>
 
+    <style name="group_cell">
+        <item name="android:background">@drawable/cell_border</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="group_cell_header" parent="group_cell">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
