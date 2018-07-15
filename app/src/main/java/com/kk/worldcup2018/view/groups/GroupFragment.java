@@ -43,6 +43,7 @@ public class GroupFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(ARG_GROUP)) {
             group = Parcels.unwrap(getArguments().getParcelable(ARG_GROUP));
+            getActivity().setTitle("Group " + group.getLetter());
         }
     }
 

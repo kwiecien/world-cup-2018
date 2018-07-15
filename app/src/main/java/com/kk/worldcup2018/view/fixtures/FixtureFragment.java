@@ -39,6 +39,7 @@ public class FixtureFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(ARG_FIXTURE)) {
             fixture = Parcels.unwrap(getArguments().getParcelable(ARG_FIXTURE));
+            getActivity().setTitle("Matchday " + fixture.getMatchday());
         }
     }
 

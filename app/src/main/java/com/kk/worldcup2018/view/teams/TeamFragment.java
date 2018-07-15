@@ -54,6 +54,7 @@ public class TeamFragment extends RecyclerViewFragment {
         db = AppDatabase.getInstance(getContext().getApplicationContext());
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
+            getActivity().setTitle(team.getName());
         }
     }
 
