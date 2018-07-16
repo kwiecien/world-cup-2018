@@ -3,6 +3,7 @@ package com.kk.worldcup2018.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -10,10 +11,10 @@ import com.kk.worldcup2018.data.response.TeamsResponse;
 
 import org.parceler.Parcel;
 
-import java.util.List;
-
 @Parcel
-@Entity
+@Entity(
+        indices = @Index(value = "name", unique = true)
+)
 public class Team {
     @PrimaryKey(autoGenerate = true)
     int id;
@@ -22,8 +23,6 @@ public class Team {
     String code;
     @ColumnInfo(name = "crest_url")
     String crestUrl;
-    @Ignore
-    List<Player> players;
     @Ignore
     @SerializedName("_links")
     TeamsResponse.TeamId responseTeamId;
@@ -34,12 +33,11 @@ public class Team {
     }
 
     @Ignore
-    public Team(int teamId, String name, String code, String crestUrl, List<Player> players) {
+    public Team(int teamId, String name, String code, String crestUrl) {
         this.teamId = teamId;
         this.name = name;
         this.code = code;
         this.crestUrl = crestUrl;
-        this.players = players;
     }
 
     // Room constructor
@@ -73,14 +71,6 @@ public class Team {
 
     public String getCrestUrl() {
         return crestUrl;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 
     public int getResponseTeamId() {

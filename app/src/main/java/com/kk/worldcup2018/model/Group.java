@@ -20,7 +20,7 @@ public class Group {
     @SerializedName("group")
     String letter;
     @Ignore
-    List<Standings> standingsList; // TODO add standings and players table
+    List<Standings> standingsList;
 
     @Ignore
     public Group() {

@@ -1,5 +1,6 @@
 package com.kk.worldcup2018.view.teams;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -25,6 +26,10 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.schedulers.Schedulers;
+
+import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 
 public class TeamFragment extends RecyclerViewFragment {
 
@@ -83,12 +88,48 @@ public class TeamFragment extends RecyclerViewFragment {
         }
     }
 
+    @SuppressLint("CheckResult")
     private void fetchPlayers() {
-        worldCupFetcher.fetchPlayers(team.getTeamId(), this::update);
+        io.reactivex.Observable.just(db)
+                .subscribeOn(Schedulers.io())
+                .subscribe(appDatabase -> {
+                    List<Player> dbPlayers = fetchDbPlayers();
+                    if (isNotEmpty(dbPlayers)) {
+                        displayOnUiThread(dbPlayers);
+                    } else {
+                        fetchApiPlayers();
+                    }
+                });
     }
 
-    private void update(List<Player> players) {
-        team.setPlayers(players);
+    private List<Player> fetchDbPlayers() {
+        return db.playerDao().findPlayersForTeam(team.getName());
+    }
+
+    @SuppressLint("CheckResult")
+    private void fetchApiPlayers() {
+        worldCupFetcher.fetchPlayers(team.getTeamId(), fetchedPlayers -> {
+            if (isNotEmpty(fetchedPlayers)) {
+                io.reactivex.Observable.just(db)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(appDatabase -> {
+                            persistPlayers(fetchedPlayers);
+                            displayOnUiThread(fetchedPlayers);
+                        });
+            }
+        });
+    }
+
+    private void displayOnUiThread(List<Player> players) {
+        getActivity().runOnUiThread(() -> updateUi(players));
+    }
+
+    private void persistPlayers(List<Player> players) {
+        players.forEach(player -> player.setTeamName(team.getName()));
+        db.playerDao().insertPlayers(players);
+    }
+
+    private void updateUi(List<Player> players) {
         PlayersRecyclerViewAdapter playersAdapter = (PlayersRecyclerViewAdapter) recyclerView.getAdapter();
         playersAdapter.setPlayers(players);
         addDecorationsToRecyclerView();

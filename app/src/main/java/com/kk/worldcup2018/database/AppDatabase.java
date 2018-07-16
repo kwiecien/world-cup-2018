@@ -10,16 +10,19 @@ import com.kk.worldcup2018.database.converter.DateConverter;
 import com.kk.worldcup2018.database.converter.StatusConverter;
 import com.kk.worldcup2018.database.dao.FixtureDao;
 import com.kk.worldcup2018.database.dao.GroupDao;
+import com.kk.worldcup2018.database.dao.PlayerDao;
 import com.kk.worldcup2018.database.dao.StandingsDao;
 import com.kk.worldcup2018.database.dao.TeamDao;
 import com.kk.worldcup2018.model.Fixture;
 import com.kk.worldcup2018.model.Group;
+import com.kk.worldcup2018.model.Player;
 import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.model.Team;
 
 import timber.log.Timber;
 
-@Database(entities = {Team.class, Fixture.class, Group.class, Standings.class}, version = 3, exportSchema = false)
+@Database(entities = {Team.class, Player.class, Fixture.class, Group.class, Standings.class},
+        version = 4, exportSchema = false)
 @TypeConverters({DateConverter.class, StatusConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
@@ -40,6 +43,8 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract TeamDao teamDao();
+
+    public abstract PlayerDao playerDao();
 
     public abstract FixtureDao fixtureDao();
 
