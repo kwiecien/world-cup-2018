@@ -123,8 +123,8 @@ public class TeamsFragment extends RecyclerViewFragment {
         });
     }
 
-    private void displayOnUiThread(List<Team> fetchedTeams) {
-        getActivity().runOnUiThread(() -> updateUi(fetchedTeams));
+    private void displayOnUiThread(List<Team> teams) {
+        getActivity().runOnUiThread(() -> updateUi(teams));
     }
 
     private void persistTeams(List<Team> teams) {
