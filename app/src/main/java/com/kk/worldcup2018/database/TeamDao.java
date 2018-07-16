@@ -21,5 +21,4 @@ public interface TeamDao {
     @Insert
     void insertTeams(List<Team> teams);
 
-
 }

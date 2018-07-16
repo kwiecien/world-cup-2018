@@ -48,8 +48,7 @@ public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecycler
         holder.countryView.setText(teams.get(position).getName());
         GlideApp.with(context)
                 .as(PictureDrawable.class)
-                //.placeholder(R.drawable.image_loading) // TODO
-                //.error(R.drawable.image_error) // TODO
+                .error(R.drawable.flag_icon)
                 .transition(withCrossFade())
                 .listener(new SvgSoftwareLayerSetter())
                 .load(teams.get(position).getCrestUrl())

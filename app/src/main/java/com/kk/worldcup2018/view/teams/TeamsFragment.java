@@ -24,6 +24,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -103,10 +105,6 @@ public class TeamsFragment extends RecyclerViewFragment {
                 });
     }
 
-    private boolean isNotEmpty(List<Team> teams) {
-        return teams != null && !teams.isEmpty();
-    }
-
     private List<Team> fetchDbTeams() {
         return db.teamDao().findTeams();
     }
@@ -129,8 +127,8 @@ public class TeamsFragment extends RecyclerViewFragment {
         getActivity().runOnUiThread(() -> updateUi(fetchedTeams));
     }
 
-    private void persistTeams(List<Team> fetchedTeams) {
-        db.teamDao().insertTeams(fetchedTeams);
+    private void persistTeams(List<Team> teams) {
+        db.teamDao().insertTeams(teams);
     }
 
     private void updateUi(List<Team> teams) {
