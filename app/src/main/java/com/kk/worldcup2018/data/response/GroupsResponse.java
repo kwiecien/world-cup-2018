@@ -43,7 +43,8 @@ public class GroupsResponse {
         for (GroupResponse groupResponse : groupResponses) {
             standings.add(new Standings(groupResponse.getRank(), groupResponse.getTeam(), groupResponse.getTeamId(),
                     groupResponse.getPlayedGames(), groupResponse.getPoints(),
-                    groupResponse.getGoals(), groupResponse.getGoalsAgainst(), groupResponse.getGoalDifference()));
+                    groupResponse.getGoals(), groupResponse.getGoalsAgainst(), groupResponse.getGoalDifference(),
+                    groupLetter));
         }
         return new Group(groupLetter, standings);
     }

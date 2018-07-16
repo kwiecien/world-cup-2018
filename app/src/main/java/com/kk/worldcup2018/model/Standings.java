@@ -1,13 +1,18 @@
 package com.kk.worldcup2018.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import org.parceler.Parcel;
 
 @Parcel
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = Group.class,
+        parentColumns = "letter",
+        childColumns = "groupLetter"),
+        indices = {@Index("id"), @Index("groupLetter")})
 public class Standings {
     @PrimaryKey(autoGenerate = true)
     int id;
@@ -19,6 +24,7 @@ public class Standings {
     int goals;
     int goalsAgainst;
     int goalDifference;
+    String groupLetter;
 
     @Ignore
     public Standings() {
@@ -26,7 +32,7 @@ public class Standings {
     }
 
     @Ignore
-    public Standings(int rank, String team, int teamId, int playedGames, int points, int goals, int goalsAgainst, int goalDifference) {
+    public Standings(int rank, String team, int teamId, int playedGames, int points, int goals, int goalsAgainst, int goalDifference, String groupLetter) {
         this.rank = rank;
         this.team = team;
         this.teamId = teamId;
@@ -35,9 +41,10 @@ public class Standings {
         this.goals = goals;
         this.goalsAgainst = goalsAgainst;
         this.goalDifference = goalDifference;
+        this.groupLetter = groupLetter;
     }
 
-    public Standings(int id, int rank, String team, int teamId, int playedGames, int points, int goals, int goalsAgainst, int goalDifference) {
+    public Standings(int id, int rank, String team, int teamId, int playedGames, int points, int goals, int goalsAgainst, int goalDifference, String groupLetter) {
         this.id = id;
         this.rank = rank;
         this.team = team;
@@ -47,6 +54,7 @@ public class Standings {
         this.goals = goals;
         this.goalsAgainst = goalsAgainst;
         this.goalDifference = goalDifference;
+        this.groupLetter = groupLetter;
     }
 
     public int getId() {
@@ -83,5 +91,13 @@ public class Standings {
 
     public int getGoalDifference() {
         return goalDifference;
+    }
+
+    public String getGroupLetter() {
+        return groupLetter;
+    }
+
+    public void setGroupLetter(String groupLetter) {
+        this.groupLetter = groupLetter;
     }
 }

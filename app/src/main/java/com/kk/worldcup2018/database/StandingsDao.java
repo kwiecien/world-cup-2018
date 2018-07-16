@@ -11,9 +11,9 @@ import java.util.List;
 @Dao
 public interface StandingsDao {
 
-    @Query("SELECT * FROM standings")
-    List<Standings> findStandings();
-
     @Insert
     void insertStandings(List<Standings> standings);
+
+    @Query("SELECT * FROM standings WHERE groupLetter = :letter")
+    List<Standings> findStandingsForGroup(String letter);
 }

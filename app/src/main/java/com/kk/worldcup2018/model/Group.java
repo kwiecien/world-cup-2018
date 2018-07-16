@@ -2,6 +2,7 @@ package com.kk.worldcup2018.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Parcel
-@Entity
+@Entity(indices = @Index(value = "letter", unique = true))
 public class Group {
     @PrimaryKey(autoGenerate = true)
     int id;
@@ -35,6 +36,7 @@ public class Group {
     @Ignore
     public Group(String letter, List<Standings> standingsList) {
         this.letter = letter;
+        standingsList.forEach(standings -> standings.setGroupLetter(letter));
         this.standingsList = standingsList;
     }
 
@@ -48,5 +50,9 @@ public class Group {
 
     public List<Standings> getStandingsList() {
         return standingsList;
+    }
+
+    public void setStandingsList(List<Standings> standings) {
+        standingsList = standings;
     }
 }

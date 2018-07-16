@@ -14,6 +14,7 @@ import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Group;
+import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 
 import java.util.ArrayList;
@@ -88,7 +89,12 @@ public class GroupsFragment extends RecyclerViewFragment {
     }
 
     private List<Group> fetchDbGroups() {
-        return db.groupDao().findGroups();
+        List<Group> groups = db.groupDao().findGroups();
+        for (Group group : groups) {
+            List<Standings> standingsForGroup = db.standingsDao().findStandingsForGroup(group.getLetter());
+            group.setStandingsList(standingsForGroup);
+        }
+        return groups;
     }
 
     @SuppressLint("CheckResult")
