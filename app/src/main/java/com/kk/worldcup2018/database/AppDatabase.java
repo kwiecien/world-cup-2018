@@ -6,6 +6,12 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.kk.worldcup2018.database.converter.DateConverter;
+import com.kk.worldcup2018.database.converter.StatusConverter;
+import com.kk.worldcup2018.database.dao.FixtureDao;
+import com.kk.worldcup2018.database.dao.GroupDao;
+import com.kk.worldcup2018.database.dao.StandingsDao;
+import com.kk.worldcup2018.database.dao.TeamDao;
 import com.kk.worldcup2018.model.Fixture;
 import com.kk.worldcup2018.model.Group;
 import com.kk.worldcup2018.model.Standings;

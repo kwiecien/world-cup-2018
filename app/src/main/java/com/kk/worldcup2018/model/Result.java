@@ -3,7 +3,7 @@ package com.kk.worldcup2018.model;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.TypeConverters;
 
-import com.kk.worldcup2018.database.HalfTimeResultConverter;
+import com.kk.worldcup2018.database.converter.HalfTimeResultConverter;
 
 import org.parceler.Parcel;
 

@@ -1,10 +1,10 @@
-package com.kk.worldcup2018.database;
+package com.kk.worldcup2018.database.converter;
 
 import android.arch.persistence.room.TypeConverter;
 
 import static com.kk.worldcup2018.model.Fixture.Status;
 
-class StatusConverter {
+public class StatusConverter {
 
     @TypeConverter
     public static Status toStatus(String status) {

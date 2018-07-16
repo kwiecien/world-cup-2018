@@ -1,4 +1,4 @@
-package com.kk.worldcup2018.database;
+package com.kk.worldcup2018.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
