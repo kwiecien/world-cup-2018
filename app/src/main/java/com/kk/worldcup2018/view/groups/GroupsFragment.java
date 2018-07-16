@@ -17,7 +17,9 @@ import com.kk.worldcup2018.model.Group;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -109,6 +111,10 @@ public class GroupsFragment extends RecyclerViewFragment {
 
     private void persistGroups(List<Group> groups) {
         db.groupDao().insertGroups(groups);
+        db.standingsDao().insertStandings(groups.stream()
+                .map(Group::getStandingsList)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList()));
     }
 
     private void updateUi(List<Group> groups) {

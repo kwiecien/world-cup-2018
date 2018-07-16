@@ -8,11 +8,12 @@ import android.content.Context;
 
 import com.kk.worldcup2018.model.Fixture;
 import com.kk.worldcup2018.model.Group;
+import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.model.Team;
 
 import timber.log.Timber;
 
-@Database(entities = {Team.class, Fixture.class, Group.class}, version = 2, exportSchema = false)
+@Database(entities = {Team.class, Fixture.class, Group.class, Standings.class}, version = 3, exportSchema = false)
 @TypeConverters({DateConverter.class, StatusConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
@@ -37,5 +38,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract FixtureDao fixtureDao();
 
     public abstract GroupDao groupDao();
+
+    public abstract StandingsDao standingsDao();
 
 }
