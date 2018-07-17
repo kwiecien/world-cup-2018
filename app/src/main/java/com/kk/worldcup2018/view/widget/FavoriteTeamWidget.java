@@ -13,7 +13,6 @@ import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.MainActivity;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Implementation of App Widget functionality.
@@ -38,10 +37,12 @@ public class FavoriteTeamWidget extends AppWidgetProvider {
     }
 
     private static void setWidgetText(RemoteViews views) {
-        Optional.ofNullable(favoriteTeam)
-                .ifPresent(team -> views.setTextViewText(R.id.widget_team, favoriteTeam.getName()));
-        Optional.ofNullable(teamStandings)
-                .ifPresent(standings -> views.setTextViewText(R.id.widget_standings, formatTeamRank(standings)));
+        if (favoriteTeam != null) {
+            views.setTextViewText(R.id.widget_team, favoriteTeam.getName());
+        }
+        if (teamStandings != null) {
+            views.setTextViewText(R.id.widget_standings, formatTeamRank(teamStandings));
+        }
     }
 
     private static String formatTeamRank(Standings standings) {
