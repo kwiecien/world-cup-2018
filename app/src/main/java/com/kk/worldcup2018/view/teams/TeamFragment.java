@@ -20,6 +20,7 @@ import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.databinding.FragmentTeamBinding;
 import com.kk.worldcup2018.model.Player;
+import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 
@@ -28,6 +29,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
@@ -61,7 +63,6 @@ public class TeamFragment extends RecyclerViewFragment {
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
             getActivity().setTitle(team.getName());
-            FavoriteTeamService.startActionUpdateFavoriteTeamWidgets(getContext().getApplicationContext(), team);
         }
     }
 
@@ -76,7 +77,8 @@ public class TeamFragment extends RecyclerViewFragment {
         FragmentTeamBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_team, container, false);
         View view = binding.getRoot();
         binding.setTeam(team);
-        setupRecyclerView(view);
+        setupRecyclerView(view.findViewById(R.id.players_list));
+        setupFab(view);
         fetchPlayers();
         return view;
     }
@@ -90,9 +92,20 @@ public class TeamFragment extends RecyclerViewFragment {
         }
     }
 
+    private void setupFab(View view) {
+        view.findViewById(R.id.fab).setOnClickListener(fab ->
+                Observable.just(db)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(appDatabase -> {
+                            Standings standings = db.standingsDao().findStandingsForTeam(team.getName());
+                            FavoriteTeamService.startActionUpdateFavoriteTeamWidgets(getContext().getApplicationContext(),
+                                    team, standings);
+                        }));
+    }
+
     @SuppressLint("CheckResult")
     private void fetchPlayers() {
-        io.reactivex.Observable.just(db)
+        Observable.just(db)
                 .subscribeOn(Schedulers.io())
                 .subscribe(appDatabase -> {
                     List<Player> dbPlayers = fetchDbPlayers();
@@ -112,7 +125,7 @@ public class TeamFragment extends RecyclerViewFragment {
     private void fetchApiPlayers() {
         worldCupFetcher.fetchPlayers(team.getTeamId(), fetchedPlayers -> {
             if (isNotEmpty(fetchedPlayers)) {
-                io.reactivex.Observable.just(db)
+                Observable.just(db)
                         .subscribeOn(Schedulers.io())
                         .subscribe(appDatabase -> {
                             persistPlayers(fetchedPlayers);

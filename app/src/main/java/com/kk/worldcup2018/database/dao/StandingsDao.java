@@ -16,4 +16,8 @@ public interface StandingsDao {
 
     @Query("SELECT * FROM standings WHERE groupLetter = :letter")
     List<Standings> findStandingsForGroup(String letter);
+
+    @Query("SELECT * FROM standings WHERE team = :team")
+    Standings findStandingsForTeam(String team);
+
 }

@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.MainActivity;
+
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Implementation of App Widget functionality.
@@ -17,11 +21,12 @@ import com.kk.worldcup2018.view.MainActivity;
 public class FavoriteTeamWidget extends AppWidgetProvider {
 
     private static Team favoriteTeam;
+    private static Standings teamStandings;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.favorite_team_widget);
-        setWidgetText(favoriteTeam, views);
+        setWidgetText(views);
         setPendingIntent(context, views);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -32,15 +37,22 @@ public class FavoriteTeamWidget extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
     }
 
-    private static void setWidgetText(Team favoriteTeam, RemoteViews views) {
-        if (favoriteTeam != null) {
-            views.setTextViewText(R.id.widget_team, favoriteTeam.getName());
-        }
+    private static void setWidgetText(RemoteViews views) {
+        Optional.ofNullable(favoriteTeam)
+                .ifPresent(team -> views.setTextViewText(R.id.widget_team, favoriteTeam.getName()));
+        Optional.ofNullable(teamStandings)
+                .ifPresent(standings -> views.setTextViewText(R.id.widget_standings, formatTeamRank(standings)));
+    }
+
+    private static String formatTeamRank(Standings standings) {
+        return String.format(Locale.getDefault(),
+                "%d. group %s", standings.getRank(), standings.getGroupLetter());
     }
 
     public static void updateFavoriteTeamWidgets(Context context, AppWidgetManager appWidgetManager,
-                                                 Team newFavoriteTeam, int[] appWidgetIds) {
+                                                 Team newFavoriteTeam, Standings standings, int[] appWidgetIds) {
         favoriteTeam = newFavoriteTeam;
+        teamStandings = standings;
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
@@ -48,7 +60,9 @@ public class FavoriteTeamWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // TODO
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
     }
 
 }

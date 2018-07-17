@@ -9,10 +9,10 @@
         android:id="@+id/widget_flag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.1"
-        android:contentDescription="@string/appwidget_flag_description"
+        android:alpha="0.3"
+        android:contentDescription="@string/world_cup_2018_logo"
         android:scaleType="centerInside"
-        android:src="@drawable/flag_icon" />
+        android:src="@drawable/wc_2018_logo" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,16 +33,16 @@
             tools:text="Poland" />
 
         <TextView
-            android:id="@+id/widget_group"
+            android:id="@+id/widget_standings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
-            android:text="@string/favorite_group"
+            android:text="@string/favorite_standings"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="Group H" />
+            tools:text="1. group H" />
 
     </LinearLayout>
 

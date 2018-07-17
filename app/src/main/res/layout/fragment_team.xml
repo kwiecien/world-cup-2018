@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="java.text.DateFormat" />
+
         <variable
             name="team"
             type="com.kk.worldcup2018.model.Team" />
     </data>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/players_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        tools:context=".view.teams.TeamFragment"
-        tools:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/list_item_player"
-        tools:name="com.kk.worldcup2018.view.TeamFragment" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/players_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            tools:context=".view.teams.TeamFragment"
+            tools:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/list_item_player"
+            tools:name="com.kk.worldcup2018.view.TeamFragment" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/star_big_off" />
+
+    </RelativeLayout>
 
 </layout>
