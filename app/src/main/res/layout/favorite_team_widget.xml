@@ -1,10 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin">
 
     <ImageView
+        android:id="@+id/widget_flag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.1"
@@ -19,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/appwidget_team"
+            android:id="@+id/widget_team"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -31,7 +33,7 @@
             tools:text="Poland" />
 
         <TextView
-            android:id="@+id/appwidget_group"
+            android:id="@+id/widget_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
