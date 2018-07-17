@@ -6,16 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.model.Group;
+import com.kk.worldcup2018.view.ActionBarActivity;
 
 import org.parceler.Parcels;
 
-public class GroupActivity extends AppCompatActivity {
+public class GroupActivity extends ActionBarActivity {
 
 
     private static final String ARG_GROUP = "arg-group";
@@ -41,21 +39,6 @@ public class GroupActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
-    }
-
-    private void setupActionBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }
