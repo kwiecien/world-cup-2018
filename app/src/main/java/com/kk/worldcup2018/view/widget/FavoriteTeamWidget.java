@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.kk.worldcup2018.R;
+import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.MainActivity;
 
 /**
@@ -15,34 +16,40 @@ import com.kk.worldcup2018.view.MainActivity;
  */
 public class FavoriteTeamWidget extends AppWidgetProvider {
 
+    private static Team favoriteTeam;
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.favorite_team_widget);
-        views.setTextViewText(R.id.widget_team, "Poland"); // TODO
-        views.setTextViewText(R.id.widget_group, "Group H"); // TODO
-
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
-
+        setWidgetText(favoriteTeam, views);
+        setPendingIntent(context, views);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    private static void setPendingIntent(Context context, RemoteViews views) {
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
+    }
+
+    private static void setWidgetText(Team favoriteTeam, RemoteViews views) {
+        if (favoriteTeam != null) {
+            views.setTextViewText(R.id.widget_team, favoriteTeam.getName());
+        }
+    }
+
+    public static void updateFavoriteTeamWidgets(Context context, AppWidgetManager appWidgetManager,
+                                                 Team newFavoriteTeam, int[] appWidgetIds) {
+        favoriteTeam = newFavoriteTeam;
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
     @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created // TODO
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        // TODO
     }
 
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
 }
 

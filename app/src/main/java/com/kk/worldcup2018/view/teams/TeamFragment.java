@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kk.worldcup2018.FavoriteTeamService;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
@@ -60,6 +61,7 @@ public class TeamFragment extends RecyclerViewFragment {
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
             getActivity().setTitle(team.getName());
+            FavoriteTeamService.startActionUpdateFavoriteTeamWidgets(getContext().getApplicationContext(), team);
         }
     }
 

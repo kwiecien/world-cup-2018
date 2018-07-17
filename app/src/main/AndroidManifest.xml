@@ -57,6 +57,9 @@
                 android:resource="@xml/favorite_team_widget_info" />
         </receiver>
 
+        <service
+            android:name=".FavoriteTeamService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
