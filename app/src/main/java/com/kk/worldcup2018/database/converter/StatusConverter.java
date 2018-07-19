@@ -6,6 +6,10 @@ import static com.kk.worldcup2018.model.Fixture.Status;
 
 public class StatusConverter {
 
+    private StatusConverter() {
+        throw new UnsupportedOperationException("Suppress default constructor for noninstantiability");
+    }
+
     @TypeConverter
     public static Status toStatus(String status) {
         if (status.equals(Status.TIMED.name())) {

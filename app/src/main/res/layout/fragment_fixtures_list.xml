@@ -4,9 +4,10 @@
     android:id="@+id/fixtures_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="16dp"
+    android:layout_marginEnd="16dp"
     android:paddingStart="16dp"
     tools:context=".view.fixtures.FixturesFragment"
+    tools:ignore="RtlHardcoded,RtlSymmetry"
     tools:layoutManager="LinearLayoutManager"
     tools:listitem="@layout/list_item_fixture_in_play"
     tools:name="com.kk.worldcup2018.view.FixturesFragment" />

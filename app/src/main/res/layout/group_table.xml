@@ -8,27 +8,27 @@
 
         <TextView
             style="@style/group_cell_header"
-            android:text="Rank" />
+            android:text="@string/rank" />
 
         <TextView
             style="@style/group_cell_header"
-            android:text="Team" />
+            android:text="@string/team" />
 
         <TextView
             style="@style/group_cell_header"
-            android:text="G+" />
+            android:text="@string/goals_plus" />
 
         <TextView
             style="@style/group_cell_header"
-            android:text="G-" />
+            android:text="@string/goals_minus" />
 
         <TextView
             style="@style/group_cell_header"
-            android:text="+-" />
+            android:text="@string/plus_minus" />
 
         <TextView
             style="@style/group_cell_header"
-            android:text="Points" />
+            android:text="@string/points" />
     </TableRow>
 
     <include

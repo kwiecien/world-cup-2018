@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract class Response<T> {
-    List<Team> teams = new ArrayList<>();
-    List<Fixture> fixtures = new ArrayList<>();
-    List<Player> players = new ArrayList<>();
+    final List<Team> teams = new ArrayList<>();
+    final List<Fixture> fixtures = new ArrayList<>();
+    final List<Player> players = new ArrayList<>();
 
     @NonNull
     public abstract List<T> getObjects();

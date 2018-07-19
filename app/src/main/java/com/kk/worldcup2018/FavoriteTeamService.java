@@ -19,9 +19,9 @@ import org.parceler.Parcels;
  * <p>
  */
 public class FavoriteTeamService extends IntentService {
-    public static final String ACTION_UPDATE_FAVORITE_TEAM = "com.kk.worldcup2018.action.update_favorite_team";
-    public static final String EXTRA_PARAM_TEAM = "com.kk.worldcup2018.extra.team";
-    public static final String EXTRA_PARAM_STANDINGS = "com.kk.worldcup2018.extra.standings";
+    private static final String ACTION_UPDATE_FAVORITE_TEAM = "com.kk.worldcup2018.action.update_favorite_team";
+    private static final String EXTRA_PARAM_TEAM = "com.kk.worldcup2018.extra.team";
+    private static final String EXTRA_PARAM_STANDINGS = "com.kk.worldcup2018.extra.standings";
 
     public FavoriteTeamService() {
         super("FavoriteTeamService");

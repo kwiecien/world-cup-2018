@@ -7,6 +7,10 @@ import com.kk.worldcup2018.model.Result;
 
 public class HalfTimeResultConverter {
 
+    private HalfTimeResultConverter() {
+        throw new UnsupportedOperationException("Suppress default constructor for noninstantiability");
+    }
+
     @TypeConverter
     public static Result toHalfTimeResult(String result) {
         String[] halfTimeGoals = TextUtils.split(result, ":");

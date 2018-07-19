@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupsResponse {
+class GroupsResponse {
     private final List<GroupResponse> A;
     private final List<GroupResponse> B;
     private final List<GroupResponse> C;

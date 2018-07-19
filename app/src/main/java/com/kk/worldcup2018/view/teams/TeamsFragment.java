@@ -31,7 +31,7 @@ import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener} // TODO
  * interface.
  */
 public class TeamsFragment extends RecyclerViewFragment {
@@ -39,7 +39,7 @@ public class TeamsFragment extends RecyclerViewFragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String TAG = TeamsFragment.class.getSimpleName();
     private AppDatabase db;
-    private int columnCount = 1;
+    private int columnCount = 1; // TODO
     private Tracker tracker;
 
     public TeamsFragment() {

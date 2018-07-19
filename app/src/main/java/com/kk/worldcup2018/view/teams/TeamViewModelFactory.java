@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.kk.worldcup2018.database.AppDatabase;
 
-public class TeamViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+class TeamViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final AppDatabase appDatabase;
     private final int teamId;
 

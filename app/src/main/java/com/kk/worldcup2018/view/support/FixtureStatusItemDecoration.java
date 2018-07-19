@@ -8,9 +8,9 @@ import android.view.View;
 import com.kk.worldcup2018.view.fixtures.FixturesRecyclerViewAdapter;
 
 public class FixtureStatusItemDecoration extends RecyclerView.ItemDecoration {
-    private Drawable timedDrawable;
-    private Drawable inPlayDrawable;
-    private Drawable finishedDrawable;
+    private final Drawable timedDrawable;
+    private final Drawable inPlayDrawable;
+    private final Drawable finishedDrawable;
 
     public FixtureStatusItemDecoration(Drawable timedDrawable, Drawable inPlayDrawable, Drawable finishedDrawable) {
         this.timedDrawable = timedDrawable;

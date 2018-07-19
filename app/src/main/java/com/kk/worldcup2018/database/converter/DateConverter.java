@@ -7,6 +7,10 @@ import java.util.Optional;
 
 public class DateConverter {
 
+    private DateConverter() {
+        throw new UnsupportedOperationException("Suppress default constructor for noninstantiability");
+    }
+
     @TypeConverter
     public static Date toDate(Long timestamp) {
         return Optional.ofNullable(timestamp)

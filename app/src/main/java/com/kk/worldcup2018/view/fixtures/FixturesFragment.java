@@ -133,7 +133,7 @@ public class FixturesFragment extends RecyclerViewFragment {
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    public void addLeftVerticalDrawable(@Nullable Context context) {
+    private void addLeftVerticalDrawable(@Nullable Context context) {
         if (context == null) {
             return;
         }

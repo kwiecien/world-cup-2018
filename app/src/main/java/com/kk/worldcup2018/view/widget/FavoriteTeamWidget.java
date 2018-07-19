@@ -22,8 +22,8 @@ public class FavoriteTeamWidget extends AppWidgetProvider {
     private static Team favoriteTeam;
     private static Standings teamStandings;
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.favorite_team_widget);
         setWidgetText(views);
         setPendingIntent(context, views);

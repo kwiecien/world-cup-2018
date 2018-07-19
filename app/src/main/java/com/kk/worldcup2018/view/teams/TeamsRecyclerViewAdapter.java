@@ -26,8 +26,8 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  */
 public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecyclerViewAdapter.TeamsViewHolder> {
 
+    private final Context context;
     private List<Team> teams;
-    private Context context;
 
     TeamsRecyclerViewAdapter(Context context, List<Team> teams) {
         this.context = context;

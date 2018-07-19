@@ -15,7 +15,6 @@ import org.parceler.Parcels;
 
 public class GroupActivity extends ActionBarActivity {
 
-
     private static final String ARG_GROUP = "arg-group";
 
     public static Intent newIntent(@NonNull Context context, @NonNull Group group) {

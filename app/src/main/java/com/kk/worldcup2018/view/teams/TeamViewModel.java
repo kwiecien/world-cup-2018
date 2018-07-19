@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Team;
 
-public class TeamViewModel extends ViewModel {
+class TeamViewModel extends ViewModel {
 
     private final LiveData<Team> team;
 

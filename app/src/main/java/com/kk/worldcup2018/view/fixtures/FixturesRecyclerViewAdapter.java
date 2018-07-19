@@ -25,7 +25,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
     public static final int TIMED_VIEW_TYPE = 0;
     public static final int IN_PLAY_VIEW_TYPE = 1;
-    public static final int FINISHED_VIEW_TYPE = 3;
+    public static final int FINISHED_VIEW_TYPE = 2;
     private final Context context;
     private List<Fixture> fixtures;
 

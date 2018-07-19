@@ -8,11 +8,12 @@
     <string name="colon">:</string>
     <string name="flag_country">Country\'s flag</string>
     <string name="action_settings">Settings</string>
-    <string name="four">4</string>
     <string name="question_mark">\?</string>
-    <string name="appwidget_text">Information about your favorite team</string>
-    <string name="appwidget_flag_description">Flag of your favorite team</string>
-    <string name="add_widget">Add widget</string>
-    <string name="favorite_country">Favorite country</string>
-    <string name="favorite_standings">Standings ?</string>
+    <string name="digit_one">1</string>
+    <string name="rank">Rank</string>
+    <string name="team">Team</string>
+    <string name="goals_plus">G+</string>
+    <string name="goals_minus">G-</string>
+    <string name="plus_minus">+-</string>
+    <string name="points">Points</string>
 </resources>

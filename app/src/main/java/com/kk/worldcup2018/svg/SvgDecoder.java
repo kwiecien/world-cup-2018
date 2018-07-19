@@ -15,11 +15,10 @@ import java.io.InputStream;
 /**
  * Decodes an SVG internal representation from an {@link InputStream}.
  */
-public class SvgDecoder implements ResourceDecoder<InputStream, SVG> {
+class SvgDecoder implements ResourceDecoder<InputStream, SVG> {
 
     @Override
     public boolean handles(@NonNull InputStream source, @NonNull Options options) {
-        // TODO: Can we tell?
         return true;
     }
 
