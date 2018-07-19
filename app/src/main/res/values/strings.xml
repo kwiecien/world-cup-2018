@@ -16,4 +16,5 @@
     <string name="goals_minus">G-</string>
     <string name="plus_minus">+-</string>
     <string name="points">Points</string>
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
 </resources>

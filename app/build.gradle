@@ -65,6 +65,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.google.android.gms:play-services-analytics:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
 
     compileOnly "org.projectlombok:lombok:$lombok_version"
 
