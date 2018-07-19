@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.Tracker;
 import com.kk.worldcup2018.FavoriteTeamService;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
@@ -23,6 +24,7 @@ import com.kk.worldcup2018.model.Player;
 import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
+import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
 
 import org.parceler.Parcels;
 
@@ -37,8 +39,10 @@ import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 public class TeamFragment extends RecyclerViewFragment {
 
     private static final String ARG_TEAM = "arg-team";
+    private static final String TAG = TeamFragment.class.getSimpleName();
     private Team team;
     private AppDatabase db;
+    private Tracker tracker;
 
     public TeamFragment() {
         /*
@@ -59,6 +63,7 @@ public class TeamFragment extends RecyclerViewFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
+        tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
@@ -81,6 +86,12 @@ public class TeamFragment extends RecyclerViewFragment {
         setupFab(view);
         fetchPlayers();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GoogleAnalyticsUtils.trackScreen(tracker, TAG);
     }
 
     private void setupRecyclerView(View view) {

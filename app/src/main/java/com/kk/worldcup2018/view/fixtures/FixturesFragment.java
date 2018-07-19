@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.Tracker;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Fixture;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 import com.kk.worldcup2018.view.support.FixtureStatusItemDecoration;
+import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,9 @@ import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 
 public class FixturesFragment extends RecyclerViewFragment {
 
+    private static final String TAG = FixturesFragment.class.getSimpleName();
     private AppDatabase db;
+    private Tracker tracker;
 
     public FixturesFragment() {
         /*
@@ -47,6 +51,7 @@ public class FixturesFragment extends RecyclerViewFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
+        tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
     }
 
@@ -62,6 +67,12 @@ public class FixturesFragment extends RecyclerViewFragment {
         setupRecyclerView(view);
         fetchFixtures();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GoogleAnalyticsUtils.trackScreen(tracker, TAG);
     }
 
     private void setupRecyclerView(View view) {

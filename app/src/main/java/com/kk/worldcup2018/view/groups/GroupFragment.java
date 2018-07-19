@@ -10,9 +10,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.Tracker;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.model.Group;
 import com.kk.worldcup2018.model.Standings;
+import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
 
 import org.parceler.Parcels;
 
@@ -21,7 +23,9 @@ import java.util.List;
 public class GroupFragment extends Fragment {
 
     private static final String ARG_GROUP = "arg-group";
+    private static final String TAG = GroupFragment.class.getSimpleName();
     private Group group;
+    private Tracker tracker;
 
     public GroupFragment() {
         /*
@@ -41,6 +45,7 @@ public class GroupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         if (getArguments() != null && getArguments().containsKey(ARG_GROUP)) {
             group = Parcels.unwrap(getArguments().getParcelable(ARG_GROUP));
             getActivity().setTitle("Group " + group.getLetter());
@@ -53,6 +58,12 @@ public class GroupFragment extends Fragment {
         View view = inflater.inflate(R.layout.group_table, container, false);
         fillGroupTable((TableLayout) view, group.getStandingsList());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GoogleAnalyticsUtils.trackScreen(tracker, TAG);
     }
 
     private void fillGroupTable(@NonNull TableLayout tableLayout, List<Standings> standings) {

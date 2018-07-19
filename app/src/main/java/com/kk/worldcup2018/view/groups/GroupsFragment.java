@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.Tracker;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Group;
 import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
+import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +31,9 @@ import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 
 public class GroupsFragment extends RecyclerViewFragment {
 
+    private static final String TAG = GroupsFragment.class.getSimpleName();
     private AppDatabase db;
+    private Tracker tracker;
 
     public GroupsFragment() {
         /*
@@ -46,6 +50,7 @@ public class GroupsFragment extends RecyclerViewFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
+        tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
     }
 
@@ -61,6 +66,12 @@ public class GroupsFragment extends RecyclerViewFragment {
         setupRecyclerView(view);
         fetchGroups();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GoogleAnalyticsUtils.trackScreen(tracker, TAG);
     }
 
     private void setupRecyclerView(View view) {
