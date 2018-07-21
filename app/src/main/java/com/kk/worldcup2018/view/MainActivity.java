@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.view.fixtures.FixturesFragment;
 import com.kk.worldcup2018.view.groups.GroupsFragment;
@@ -52,8 +53,13 @@ public class MainActivity extends AppCompatActivity {
         setUpTimber();
         setContentView(R.layout.activity_main);
         setUpBottomNavigation();
-        createNotificationChannel();
+        setUpFirebaseCloudMessaging();
         setWelcomeScreen();
+    }
+
+    private void setUpFirebaseCloudMessaging() {
+        createNotificationChannel();
+        FirebaseMessaging.getInstance().subscribeToTopic("wc2018");
     }
 
     private void setUpTimber() {
