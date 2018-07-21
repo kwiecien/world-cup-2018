@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "545686823163",
+    "firebase_url": "https://world-cup-2018-c3524.firebaseio.com",
+    "project_id": "world-cup-2018-c3524",
+    "storage_bucket": "world-cup-2018-c3524.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545686823163:android:98681b9d08eafb59",
+        "android_client_info": {
+          "package_name": "com.kk.worldcup2018"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545686823163-kv3lti336olmcuntmpvd1fgp8at76sc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "your-api-key"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
