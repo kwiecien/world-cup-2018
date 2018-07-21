@@ -1,5 +1,8 @@
 package com.kk.worldcup2018.view;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setUpTimber();
         setContentView(R.layout.activity_main);
         setUpBottomNavigation();
+        createNotificationChannel();
         setWelcomeScreen();
     }
 
@@ -66,6 +70,19 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < navigation.getMenu().size(); i++) {
             navigation.getMenu().getItem(i).setCheckable(false);
             navigation.getMenu().getItem(i).setChecked(false);
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelName = "World Cup 2018";
+            String channelDescription = "Channel for World Cup 2018 notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel notificationChannel =
+                    new NotificationChannel(getString(R.string.default_notification_channel_id), channelName, importance);
+            notificationChannel.setDescription(channelDescription);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
         }
     }
 
