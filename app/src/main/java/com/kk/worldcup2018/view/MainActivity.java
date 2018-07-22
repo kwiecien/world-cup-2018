@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -42,9 +44,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragmentWith(Fragment newFragment) {
+        prepareTransition(newFragment);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment, newFragment)
                 .commit();
+    }
+
+    private void prepareTransition(Fragment newFragment) {
+        Slide slideEnter = new Slide();
+        slideEnter.setSlideEdge(Gravity.BOTTOM);
+        newFragment.setEnterTransition(slideEnter);
     }
 
     @Override
