@@ -1,7 +1,12 @@
 package com.kk.worldcup2018.view.groups;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.transition.Explode;
+import android.support.transition.Transition;
+import android.support.transition.TransitionManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +26,7 @@ import timber.log.Timber;
 public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecyclerViewAdapter.GroupsViewHolder> {
 
     private final Context context;
+    private ViewGroup recyclerView;
     private List<Group> groups;
 
     GroupsRecyclerViewAdapter(Context context, List<Group> groups) {
@@ -31,6 +37,7 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
     @NonNull
     @Override
     public GroupsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        recyclerView = parent;
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_group, parent, false);
         return new GroupsViewHolder(view);
@@ -43,8 +50,16 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
 
         holder.view.setOnClickListener(v -> {
             Timber.d("Fixture %s clicked", holder.group.getLetter());
-            context.startActivity(GroupActivity.newIntent(context, holder.group));
+            prepareTransition();
+            context.startActivity(GroupActivity.newIntent(context, holder.group),
+                    ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle());
         });
+    }
+
+    private void prepareTransition() {
+        Transition transition = new Explode();
+        transition.setDuration(1000);
+        TransitionManager.beginDelayedTransition(recyclerView, transition);
     }
 
     public void setGroups(List<Group> groups) {

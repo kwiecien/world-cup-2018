@@ -67,10 +67,12 @@ public class GroupFragment extends Fragment {
     }
 
     private void fillGroupTable(@NonNull TableLayout tableLayout, List<Standings> standings) {
-        fillRow(tableLayout.findViewById(R.id.first), standings.get(0));
-        fillRow(tableLayout.findViewById(R.id.second), standings.get(1));
-        fillRow(tableLayout.findViewById(R.id.third), standings.get(2));
-        fillRow(tableLayout.findViewById(R.id.fourth), standings.get(3));
+        if (standings.size() == 4) {
+            fillRow(tableLayout.findViewById(R.id.first), standings.get(0));
+            fillRow(tableLayout.findViewById(R.id.second), standings.get(1));
+            fillRow(tableLayout.findViewById(R.id.third), standings.get(2));
+            fillRow(tableLayout.findViewById(R.id.fourth), standings.get(3));
+        }
     }
 
     private void fillRow(TableRow tableRow, Standings standings) {

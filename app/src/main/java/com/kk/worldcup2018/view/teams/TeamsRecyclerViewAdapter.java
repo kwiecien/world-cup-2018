@@ -1,8 +1,13 @@
 package com.kk.worldcup2018.view.teams;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.graphics.drawable.PictureDrawable;
 import android.support.annotation.NonNull;
+import android.support.transition.Explode;
+import android.support.transition.Transition;
+import android.support.transition.TransitionManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +32,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecyclerViewAdapter.TeamsViewHolder> {
 
     private final Context context;
+    private ViewGroup recyclerView;
     private List<Team> teams;
 
     TeamsRecyclerViewAdapter(Context context, List<Team> teams) {
@@ -37,6 +43,7 @@ public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecycler
     @NonNull
     @Override
     public TeamsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        recyclerView = parent;
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_team, parent, false);
         return new TeamsViewHolder(view);
@@ -56,8 +63,16 @@ public class TeamsRecyclerViewAdapter extends RecyclerView.Adapter<TeamsRecycler
 
         holder.view.setOnClickListener(v -> {
             Timber.d("Team %s clicked", holder.team);
-            context.startActivity(TeamActivity.newIntent(context, holder.team));
+            prepareTransition();
+            context.startActivity(TeamActivity.newIntent(context, holder.team),
+                    ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle());
         });
+    }
+
+    private void prepareTransition() {
+        Transition transition = new Explode();
+        transition.setDuration(1000);
+        TransitionManager.beginDelayedTransition(recyclerView, transition);
     }
 
     public void setTeams(List<Team> teams) {
