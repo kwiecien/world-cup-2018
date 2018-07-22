@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         restoreSelection(item);
         switch (item.getItemId()) {
             case R.id.navigation_teams:
-                replaceFragmentWith(TeamsFragment.newInstance(1));
+                replaceFragmentWith(TeamsFragment.newInstance());
                 return true;
             case R.id.navigation_fixtures:
                 replaceFragmentWith(FixturesFragment.newInstance());

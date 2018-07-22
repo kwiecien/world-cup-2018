@@ -172,12 +172,8 @@ public class TeamFragment extends RecyclerViewFragment {
             @Override
             public void onChanged(@Nullable Team team) {
                 viewModel.getTeam().removeObserver(this);
-                populateUi(team);
             }
         });
     }
 
-    private void populateUi(Team team) {
-        // TODO
-    }
 }

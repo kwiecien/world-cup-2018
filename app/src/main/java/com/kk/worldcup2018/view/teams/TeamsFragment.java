@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,18 +27,10 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener} // TODO
- * interface.
- */
 public class TeamsFragment extends RecyclerViewFragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String TAG = TeamsFragment.class.getSimpleName();
     private AppDatabase db;
-    private int columnCount = 1; // TODO
     private Tracker tracker;
 
     public TeamsFragment() {
@@ -49,12 +40,8 @@ public class TeamsFragment extends RecyclerViewFragment {
          */
     }
 
-    public static TeamsFragment newInstance(int columnCount) {
-        TeamsFragment fragment = new TeamsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public static TeamsFragment newInstance() {
+        return new TeamsFragment();
     }
 
     @Override
@@ -63,9 +50,6 @@ public class TeamsFragment extends RecyclerViewFragment {
         injectDependencies();
         tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
-        if (getArguments() != null) {
-            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -92,11 +76,7 @@ public class TeamsFragment extends RecyclerViewFragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
-            if (columnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(new TeamsRecyclerViewAdapter(getContext(), new ArrayList<>()));
         }
     }
