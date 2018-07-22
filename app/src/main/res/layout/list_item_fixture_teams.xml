@@ -13,6 +13,7 @@
         <TextView
             android:id="@+id/home_team"
             style="@style/fixtures_list_item_text_view"
+            android:transitionName="@string/transition_team_home"
             tools:text="Russia" />
 
         <TextView
@@ -22,6 +23,7 @@
         <TextView
             android:id="@+id/away_team"
             style="@style/fixtures_list_item_text_view"
+            android:transitionName="@string/transition_team_away"
             tools:text="Saudi Arabia" />
 
     </LinearLayout>

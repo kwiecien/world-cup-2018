@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">World Cup 2018</string>
+    <string name="world_cup_2018_logo">World Cup 2018 logo</string>
+
     <string name="title_teams">Teams</string>
     <string name="title_fixtures">Fixtures</string>
     <string name="title_groups">Groups</string>
-    <string name="world_cup_2018_logo">World Cup 2018 logo</string>
+
     <string name="dash">—</string>
     <string name="colon">:</string>
     <string name="flag_country">Country\'s flag</string>
@@ -16,5 +18,12 @@
     <string name="goals_minus">G-</string>
     <string name="plus_minus">+-</string>
     <string name="points">Points</string>
+
     <string name="default_notification_channel_id">default_notification_channel_id</string>
+
+    <string name="transition_team_home">transition_home_team</string>
+    <string name="transition_team_away">transition_away_team</string>
+    <string name="transition_goals_home">transition_goals_home</string>
+    <string name="transition_goals_away">transition_goals_away</string>
+
 </resources>

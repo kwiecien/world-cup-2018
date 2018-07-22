@@ -1,7 +1,10 @@
 package com.kk.worldcup2018.view.fixtures;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +66,19 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
         holder.mView.setOnClickListener(v -> {
             Timber.d("Fixture %s clicked", holder.fixture);
-            context.startActivity(FixtureActivity.newIntent(context, holder.fixture));
+            ActivityOptionsCompat options = prepareTransition(holder);
+            context.startActivity(FixtureActivity.newIntent(context, holder.fixture), options.toBundle());
         });
+    }
+
+    @NonNull
+    private ActivityOptionsCompat prepareTransition(@NonNull FixturesViewHolder holder) {
+        Pair<View, String> teamHome = Pair.create((View) holder.homeTeam, context.getString(R.string.transition_team_home));
+        Pair<View, String> teamAway = Pair.create((View) holder.awayTeam, context.getString(R.string.transition_team_away));
+        Pair<View, String> goalsHome = Pair.create((View) holder.goalsHome, context.getString(R.string.transition_goals_home));
+        Pair<View, String> goalsAway = Pair.create((View) holder.goalsAway, context.getString(R.string.transition_goals_away));
+        return ActivityOptionsCompat.makeSceneTransitionAnimation(
+                (Activity) context, teamHome, teamAway, goalsHome, goalsAway);
     }
 
     @Override

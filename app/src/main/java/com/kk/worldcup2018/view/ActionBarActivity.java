@@ -21,6 +21,7 @@ public abstract class ActionBarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            supportFinishAfterTransition();
             return true;
         }
         return super.onOptionsItemSelected(item);
