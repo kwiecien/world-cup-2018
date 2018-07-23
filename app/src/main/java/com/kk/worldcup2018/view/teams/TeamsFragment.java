@@ -1,9 +1,12 @@
 package com.kk.worldcup2018.view.teams;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,8 +33,10 @@ import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 public class TeamsFragment extends RecyclerViewFragment {
 
     private static final String TAG = TeamsFragment.class.getSimpleName();
+    private static final String BUNDLE_RECYCLER_LAYOUT = "arg-recycler-view-position";
     private AppDatabase db;
     private Tracker tracker;
+    private Activity activity;
 
     public TeamsFragment() {
         /*
@@ -62,14 +67,35 @@ public class TeamsFragment extends RecyclerViewFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_teams_list, container, false);
         setupRecyclerView(view);
-        fetchTeams();
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity = getActivity();
+        fetchTeams();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         GoogleAnalyticsUtils.trackScreen(tracker, TAG);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 
     private void setupRecyclerView(View view) {
@@ -114,7 +140,7 @@ public class TeamsFragment extends RecyclerViewFragment {
     }
 
     private void displayOnUiThread(List<Team> teams) {
-        getActivity().runOnUiThread(() -> updateUi(teams));
+        activity.runOnUiThread(() -> updateUi(teams));
     }
 
     private void persistTeams(List<Team> teams) {

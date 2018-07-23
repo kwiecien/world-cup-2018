@@ -1,8 +1,5 @@
 package com.kk.worldcup2018.view;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,13 +9,10 @@ import android.transition.Slide;
 import android.view.Gravity;
 import android.view.MenuItem;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.view.fixtures.FixturesFragment;
 import com.kk.worldcup2018.view.groups.GroupsFragment;
 import com.kk.worldcup2018.view.teams.TeamsFragment;
-
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     };
+    private BottomNavigationView navigation;
 
     private void restoreSelection(MenuItem item) {
         item.setCheckable(true);
@@ -60,21 +55,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setUpTimber();
-        setUpTransitions();
         setContentView(R.layout.activity_main);
+        setUpTransitions();
         setUpBottomNavigation();
-        setUpFirebaseCloudMessaging();
-        setWelcomeScreen();
-    }
-
-    private void setUpFirebaseCloudMessaging() {
-        createNotificationChannel();
-        FirebaseMessaging.getInstance().subscribeToTopic("wc2018");
-    }
-
-    private void setUpTimber() {
-        Timber.plant(new Timber.DebugTree());
+        if (savedInstanceState == null) {
+            removeSelection(navigation);
+            setWelcomeScreen();
+        }
     }
 
     private void setUpTransitions() {
@@ -82,28 +69,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpBottomNavigation() {
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        removeSelection(navigation);
     }
 
     private void removeSelection(BottomNavigationView navigation) {
         for (int i = 0; i < navigation.getMenu().size(); i++) {
             navigation.getMenu().getItem(i).setCheckable(false);
             navigation.getMenu().getItem(i).setChecked(false);
-        }
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelName = "World Cup 2018";
-            String channelDescription = "Channel for World Cup 2018 notifications";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel notificationChannel =
-                    new NotificationChannel(getString(R.string.default_notification_channel_id), channelName, importance);
-            notificationChannel.setDescription(channelDescription);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(notificationChannel);
         }
     }
 
