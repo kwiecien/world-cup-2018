@@ -26,4 +26,6 @@
     <string name="transition_goals_home">transition_goals_home</string>
     <string name="transition_goals_away">transition_goals_away</string>
 
+    <string name="choose_your_favorite_team">Choose your favorite team!</string>
+
 </resources>

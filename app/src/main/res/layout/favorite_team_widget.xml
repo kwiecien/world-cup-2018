@@ -26,6 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/choose_your_favorite_team"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -37,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
-            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:text="1. group H" />
