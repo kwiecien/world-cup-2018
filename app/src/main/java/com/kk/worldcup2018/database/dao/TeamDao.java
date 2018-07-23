@@ -12,9 +12,6 @@ import java.util.List;
 @Dao
 public interface TeamDao {
 
-    @Query("SELECT * FROM team WHERE teamId = :id")
-    LiveData<Team> findTeamById(int id);
-
     @Query("SELECT * FROM team ORDER BY name DESC")
     LiveData<List<Team>> findTeams();
 

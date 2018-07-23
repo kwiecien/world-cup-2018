@@ -20,7 +20,6 @@ import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.databinding.FragmentTeamBinding;
 import com.kk.worldcup2018.model.Player;
-import com.kk.worldcup2018.model.Standings;
 import com.kk.worldcup2018.model.Team;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
@@ -104,13 +103,10 @@ public class TeamFragment extends RecyclerViewFragment {
 
     private void setupFab(View view) {
         view.findViewById(R.id.fab).setOnClickListener(fab ->
-                Observable.just(db)
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(appDatabase -> {
-                            Standings standings = db.standingsDao().findStandingsForTeam(team.getName());
-                            FavoriteTeamService.startActionUpdateFavoriteTeamWidgets(getContext().getApplicationContext(),
-                                    team, standings);
-                        }));
+                db.standingsDao().findStandingsForTeam(team.getName())
+                        .observe(this, standings ->
+                                FavoriteTeamService.startActionUpdateFavoriteTeamWidgets(getContext().getApplicationContext(),
+                                        team, standings)));
     }
 
     @SuppressLint("CheckResult")

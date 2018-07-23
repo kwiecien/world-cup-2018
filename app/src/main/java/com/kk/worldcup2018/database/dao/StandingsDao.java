@@ -19,6 +19,6 @@ public interface StandingsDao {
     LiveData<List<Standings>> findStandingsForGroup(String letter);
 
     @Query("SELECT * FROM standings WHERE team = :team")
-    Standings findStandingsForTeam(String team);
+    LiveData<Standings> findStandingsForTeam(String team);
 
 }
