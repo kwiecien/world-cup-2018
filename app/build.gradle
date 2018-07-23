@@ -4,11 +4,16 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'kk'
-            keyPassword 'password'
-            storeFile file("$rootDir/keystore.jks")
-            storePassword 'password'
+        release {
+            def propertiesFile = file('../.signing/signing.properties')
+            if (propertiesFile.exists()) {
+                def properties = new Properties()
+                properties.load(new FileInputStream(propertiesFile))
+                storeFile = file(properties['STORE_FILE'])
+                storePassword = properties['STORE_PASSWORD']
+                keyAlias = properties['KEY_ALIAS']
+                keyPassword = properties['KEY_PASSWORD']
+            }
         }
     }
     compileSdkVersion 27
@@ -24,7 +29,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
