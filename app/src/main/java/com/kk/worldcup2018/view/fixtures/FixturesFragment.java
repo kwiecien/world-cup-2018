@@ -1,6 +1,8 @@
 package com.kk.worldcup2018.view.fixtures;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Fixture;
+import com.kk.worldcup2018.view.MainViewModel;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 import com.kk.worldcup2018.view.support.FixtureStatusItemDecoration;
 import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
@@ -86,21 +89,18 @@ public class FixturesFragment extends RecyclerViewFragment {
 
     @SuppressLint("CheckResult")
     private void fetchFixtures() {
-        Observable.just(db)
-                .subscribeOn(Schedulers.io())
-                .subscribe(appDatabase -> {
-                    List<Fixture> dbFixtures = fetchDbFixtures();
-                    if (isNotEmpty(dbFixtures)) {
-                        displayOnUiThread(dbFixtures);
-                    } else {
-                        fetchApiFixtures();
-                    }
-                });
-        worldCupFetcher.fetchFixtures(this::updateUi);
+        fetchDbFixtures().observe(this, fixtures -> {
+            if (isNotEmpty(fixtures)) {
+                updateUi(fixtures);
+            } else {
+                fetchApiFixtures();
+            }
+        });
     }
 
-    private List<Fixture> fetchDbFixtures() {
-        return db.fixtureDao().findFixtures();
+    private LiveData<List<Fixture>> fetchDbFixtures() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        return viewModel.getFixtures();
     }
 
     @SuppressLint("CheckResult")
@@ -130,7 +130,6 @@ public class FixturesFragment extends RecyclerViewFragment {
         fixturesAdapter.setFixtures(fixtures);
         addDecorationsToRecyclerView();
         addLeftVerticalDrawable(getContext());
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     private void addLeftVerticalDrawable(@Nullable Context context) {

@@ -114,7 +114,7 @@ public class TeamsFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Team>> fetchDbTeams() {
-        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         return viewModel.getTeams();
     }
 

@@ -1,5 +1,6 @@
 package com.kk.worldcup2018.database.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface FixtureDao {
 
     @Query("SELECT * FROM fixture")
-    List<Fixture> findFixtures();
+    LiveData<List<Fixture>> findFixtures();
 
     @Insert
     void insertFixtures(List<Fixture> fixtures);
