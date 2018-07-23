@@ -1,7 +1,7 @@
 package com.kk.worldcup2018.view.teams;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -27,6 +27,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 
@@ -36,7 +37,6 @@ public class TeamsFragment extends RecyclerViewFragment {
     private static final String BUNDLE_RECYCLER_LAYOUT = "arg-recycler-view-position";
     private AppDatabase db;
     private Tracker tracker;
-    private Activity activity;
 
     public TeamsFragment() {
         /*
@@ -67,14 +67,8 @@ public class TeamsFragment extends RecyclerViewFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_teams_list, container, false);
         setupRecyclerView(view);
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        activity = getActivity();
         fetchTeams();
+        return view;
     }
 
     @Override
@@ -109,19 +103,18 @@ public class TeamsFragment extends RecyclerViewFragment {
 
     @SuppressLint("CheckResult")
     private void fetchTeams() {
-        Observable.just(db)
-                .subscribeOn(Schedulers.io())
-                .subscribe(appDatabase -> {
-                    List<Team> dbTeams = fetchDbTeams();
-                    if (isNotEmpty(dbTeams)) {
-                        displayOnUiThread(dbTeams);
-                    } else {
-                        fetchApiTeams();
-                    }
-                });
+        LiveData<List<Team>> dbTeams = fetchDbTeams();
+        dbTeams.observe(this, teams -> {
+            if (isNotEmpty(teams)) {
+                updateUi(teams);
+            } else {
+                fetchApiTeams();
+            }
+        });
     }
 
-    private List<Team> fetchDbTeams() {
+    private LiveData<List<Team>> fetchDbTeams() {
+        Timber.d("Fetching teams from db...");
         return db.teamDao().findTeams();
     }
 
@@ -140,7 +133,7 @@ public class TeamsFragment extends RecyclerViewFragment {
     }
 
     private void displayOnUiThread(List<Team> teams) {
-        activity.runOnUiThread(() -> updateUi(teams));
+        getActivity().runOnUiThread(() -> updateUi(teams));
     }
 
     private void persistTeams(List<Team> teams) {
@@ -151,7 +144,6 @@ public class TeamsFragment extends RecyclerViewFragment {
         teams.sort(Comparator.comparing(Team::getName));
         ((TeamsRecyclerViewAdapter) recyclerView.getAdapter()).setTeams(teams);
         addDecorationsToRecyclerView();
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
 }

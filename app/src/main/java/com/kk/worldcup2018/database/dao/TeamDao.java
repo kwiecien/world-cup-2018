@@ -16,7 +16,7 @@ public interface TeamDao {
     LiveData<Team> findTeamById(int id);
 
     @Query("SELECT * FROM team ORDER BY name DESC")
-    List<Team> findTeams();
+    LiveData<List<Team>> findTeams();
 
     @Insert
     void insertTeams(List<Team> teams);
