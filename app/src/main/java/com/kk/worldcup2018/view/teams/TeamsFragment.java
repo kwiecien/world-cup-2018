@@ -2,6 +2,7 @@ package com.kk.worldcup2018.view.teams;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -18,6 +19,7 @@ import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Team;
+import com.kk.worldcup2018.view.MainViewModel;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
 
@@ -27,7 +29,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 import static com.kk.worldcup2018.utils.Collections.isNotEmpty;
 
@@ -103,8 +104,7 @@ public class TeamsFragment extends RecyclerViewFragment {
 
     @SuppressLint("CheckResult")
     private void fetchTeams() {
-        LiveData<List<Team>> dbTeams = fetchDbTeams();
-        dbTeams.observe(this, teams -> {
+        fetchDbTeams().observe(this, teams -> {
             if (isNotEmpty(teams)) {
                 updateUi(teams);
             } else {
@@ -114,8 +114,8 @@ public class TeamsFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Team>> fetchDbTeams() {
-        Timber.d("Fetching teams from db...");
-        return db.teamDao().findTeams();
+        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        return viewModel.getTeams();
     }
 
     @SuppressLint("CheckResult")
