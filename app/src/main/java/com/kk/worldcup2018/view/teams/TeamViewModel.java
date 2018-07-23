@@ -4,18 +4,20 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.kk.worldcup2018.database.AppDatabase;
-import com.kk.worldcup2018.model.Team;
+import com.kk.worldcup2018.model.Player;
+
+import java.util.List;
 
 class TeamViewModel extends ViewModel {
 
-    private final LiveData<Team> team;
+    private final LiveData<List<Player>> players;
 
-    TeamViewModel(int teamId, AppDatabase appDatabase) {
-        team = appDatabase.teamDao().findTeamById(teamId);
+    TeamViewModel(String team, AppDatabase appDatabase) {
+        players = appDatabase.playerDao().findPlayersForTeam(team);
     }
 
-    public LiveData<Team> getTeam() {
-        return team;
+    public LiveData<List<Player>> getPlayers() {
+        return players;
     }
 
 }

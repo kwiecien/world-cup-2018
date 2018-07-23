@@ -1,13 +1,12 @@
 package com.kk.worldcup2018.view.teams;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -116,20 +115,19 @@ public class TeamFragment extends RecyclerViewFragment {
 
     @SuppressLint("CheckResult")
     private void fetchPlayers() {
-        Observable.just(db)
-                .subscribeOn(Schedulers.io())
-                .subscribe(appDatabase -> {
-                    List<Player> dbPlayers = fetchDbPlayers();
-                    if (isNotEmpty(dbPlayers)) {
-                        displayOnUiThread(dbPlayers);
-                    } else {
-                        fetchApiPlayers();
-                    }
-                });
+        fetchDbPlayers().observe(this, players -> {
+            if (isNotEmpty(players)) {
+                updateUi(players);
+            } else {
+                fetchApiPlayers();
+            }
+        });
     }
 
-    private List<Player> fetchDbPlayers() {
-        return db.playerDao().findPlayersForTeam(team.getName());
+    private LiveData<List<Player>> fetchDbPlayers() {
+        TeamViewModelFactory teamViewModelFactory = new TeamViewModelFactory(db, team.getName());
+        TeamViewModel viewModel = ViewModelProviders.of(this, teamViewModelFactory).get(TeamViewModel.class);
+        return viewModel.getPlayers();
     }
 
     @SuppressLint("CheckResult")
@@ -159,21 +157,6 @@ public class TeamFragment extends RecyclerViewFragment {
         PlayersRecyclerViewAdapter playersAdapter = (PlayersRecyclerViewAdapter) recyclerView.getAdapter();
         playersAdapter.setPlayers(players);
         addDecorationsToRecyclerView();
-        recyclerView.getAdapter().notifyDataSetChanged();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        TeamViewModelFactory modelFactory = new TeamViewModelFactory(db, team.getTeamId());
-        final TeamViewModel viewModel = ViewModelProviders.of(getActivity(), modelFactory)
-                .get(TeamViewModel.class);
-        viewModel.getTeam().observe(this, new Observer<Team>() {
-            @Override
-            public void onChanged(@Nullable Team team) {
-                viewModel.getTeam().removeObserver(this);
-            }
-        });
     }
 
 }

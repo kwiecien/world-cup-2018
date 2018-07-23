@@ -8,17 +8,17 @@ import com.kk.worldcup2018.database.AppDatabase;
 
 class TeamViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final AppDatabase appDatabase;
-    private final int teamId;
+    private final String team;
 
-    public TeamViewModelFactory(AppDatabase appDatabase, int teamId) {
+    public TeamViewModelFactory(AppDatabase appDatabase, String team) {
         this.appDatabase = appDatabase;
-        this.teamId = teamId;
+        this.team = team;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         //noinspection unchecked
-        return (T) new TeamViewModel(teamId, appDatabase);
+        return (T) new TeamViewModel(team, appDatabase);
     }
 }
