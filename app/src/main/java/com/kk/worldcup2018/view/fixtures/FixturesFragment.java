@@ -99,7 +99,7 @@ public class FixturesFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Fixture>> fetchDbFixtures() {
-        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         return viewModel.getFixtures();
     }
 

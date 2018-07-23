@@ -98,7 +98,7 @@ public class GroupsFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Group>> fetchDbGroups() {
-        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         return viewModel.getGroups();
     }
 
