@@ -1,6 +1,8 @@
 package com.kk.worldcup2018.view.groups;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +17,7 @@ import com.kk.worldcup2018.R;
 import com.kk.worldcup2018.dagger.DaggerWorldCupComponent;
 import com.kk.worldcup2018.database.AppDatabase;
 import com.kk.worldcup2018.model.Group;
-import com.kk.worldcup2018.model.Standings;
+import com.kk.worldcup2018.view.MainViewModel;
 import com.kk.worldcup2018.view.RecyclerViewFragment;
 import com.kk.worldcup2018.view.support.GoogleAnalyticsUtils;
 
@@ -85,27 +87,26 @@ public class GroupsFragment extends RecyclerViewFragment {
 
     @SuppressLint("CheckResult")
     private void fetchGroups() {
-        Observable.just(db)
-                .subscribeOn(Schedulers.io())
-                .subscribe(appDatabase -> {
-                    List<Group> dbGroups = fetchDbGroups();
-                    if (isNotEmpty(dbGroups)) {
-                        displayOnUiThread(dbGroups);
-                    } else {
-                        fetchApiGroups();
-                    }
-                });
-
-
+        fetchDbGroups().observe(this, groups -> {
+            if (isNotEmpty(groups)) {
+                fetchDbStandings(groups);
+                updateUi(groups);
+            } else {
+                fetchApiGroups();
+            }
+        });
     }
 
-    private List<Group> fetchDbGroups() {
-        List<Group> groups = db.groupDao().findGroups();
+    private LiveData<List<Group>> fetchDbGroups() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        return viewModel.getGroups();
+    }
+
+    private void fetchDbStandings(List<Group> groups) {
         for (Group group : groups) {
-            List<Standings> standingsForGroup = db.standingsDao().findStandingsForGroup(group.getLetter());
-            group.setStandingsList(standingsForGroup);
+            db.standingsDao().findStandingsForGroup(group.getLetter())
+                    .observe(this, group::setStandingsList);
         }
-        return groups;
     }
 
     @SuppressLint("CheckResult")
@@ -137,7 +138,6 @@ public class GroupsFragment extends RecyclerViewFragment {
     private void updateUi(List<Group> groups) {
         ((GroupsRecyclerViewAdapter) recyclerView.getAdapter()).setGroups(groups);
         addDecorationsToRecyclerView();
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
 }

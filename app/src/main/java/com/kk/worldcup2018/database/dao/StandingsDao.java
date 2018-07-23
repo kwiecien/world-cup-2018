@@ -1,5 +1,6 @@
 package com.kk.worldcup2018.database.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -15,7 +16,7 @@ public interface StandingsDao {
     void insertStandings(List<Standings> standings);
 
     @Query("SELECT * FROM standings WHERE groupLetter = :letter")
-    List<Standings> findStandingsForGroup(String letter);
+    LiveData<List<Standings>> findStandingsForGroup(String letter);
 
     @Query("SELECT * FROM standings WHERE team = :team")
     Standings findStandingsForTeam(String team);
