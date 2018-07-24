@@ -38,6 +38,7 @@ public class TeamsFragment extends RecyclerViewFragment {
     private static final String BUNDLE_RECYCLER_LAYOUT = "arg-recycler-view-position";
     private AppDatabase db;
     private Tracker tracker;
+    private MainViewModel viewModel;
 
     public TeamsFragment() {
         /*
@@ -56,6 +57,7 @@ public class TeamsFragment extends RecyclerViewFragment {
         injectDependencies();
         tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
+        viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -114,7 +116,6 @@ public class TeamsFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Team>> fetchDbTeams() {
-        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         return viewModel.getTeams();
     }
 

@@ -41,6 +41,8 @@ public class TeamFragment extends RecyclerViewFragment {
     private Team team;
     private AppDatabase db;
     private Tracker tracker;
+    private TeamViewModelFactory teamViewModelFactory;
+    private TeamViewModel viewModel;
 
     public TeamFragment() {
         /*
@@ -63,6 +65,8 @@ public class TeamFragment extends RecyclerViewFragment {
         injectDependencies();
         tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
+        teamViewModelFactory = new TeamViewModelFactory(db, team.getName());
+        viewModel = ViewModelProviders.of(this, teamViewModelFactory).get(TeamViewModel.class);
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
             getActivity().setTitle(team.getName());
@@ -121,8 +125,6 @@ public class TeamFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Player>> fetchDbPlayers() {
-        TeamViewModelFactory teamViewModelFactory = new TeamViewModelFactory(db, team.getName());
-        TeamViewModel viewModel = ViewModelProviders.of(this, teamViewModelFactory).get(TeamViewModel.class);
         return viewModel.getPlayers();
     }
 

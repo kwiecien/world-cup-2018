@@ -38,6 +38,7 @@ public class FixturesFragment extends RecyclerViewFragment {
     private static final String TAG = FixturesFragment.class.getSimpleName();
     private AppDatabase db;
     private Tracker tracker;
+    private MainViewModel viewModel;
 
     public FixturesFragment() {
         /*
@@ -56,6 +57,7 @@ public class FixturesFragment extends RecyclerViewFragment {
         injectDependencies();
         tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
+        viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -99,7 +101,6 @@ public class FixturesFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Fixture>> fetchDbFixtures() {
-        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         return viewModel.getFixtures();
     }
 

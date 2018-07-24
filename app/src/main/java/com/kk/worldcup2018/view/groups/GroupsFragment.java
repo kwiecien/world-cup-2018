@@ -36,6 +36,7 @@ public class GroupsFragment extends RecyclerViewFragment {
     private static final String TAG = GroupsFragment.class.getSimpleName();
     private AppDatabase db;
     private Tracker tracker;
+    private MainViewModel viewModel;
 
     public GroupsFragment() {
         /*
@@ -54,6 +55,7 @@ public class GroupsFragment extends RecyclerViewFragment {
         injectDependencies();
         tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
+        viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -98,7 +100,6 @@ public class GroupsFragment extends RecyclerViewFragment {
     }
 
     private LiveData<List<Group>> fetchDbGroups() {
-        MainViewModel viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         return viewModel.getGroups();
     }
 
