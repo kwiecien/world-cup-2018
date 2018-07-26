@@ -65,10 +65,10 @@ public class TeamFragment extends RecyclerViewFragment {
         injectDependencies();
         tracker = GoogleAnalyticsUtils.initializeTracker(getActivity());
         db = AppDatabase.getInstance(getContext().getApplicationContext());
-        teamViewModelFactory = new TeamViewModelFactory(db, team.getName());
-        viewModel = ViewModelProviders.of(this, teamViewModelFactory).get(TeamViewModel.class);
         if (getArguments() != null && getArguments().containsKey(ARG_TEAM)) {
             team = Parcels.unwrap(getArguments().getParcelable(ARG_TEAM));
+            teamViewModelFactory = new TeamViewModelFactory(db, team.getName());
+            viewModel = ViewModelProviders.of(this, teamViewModelFactory).get(TeamViewModel.class);
             getActivity().setTitle(team.getName());
         }
     }
